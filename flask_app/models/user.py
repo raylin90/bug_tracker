@@ -53,10 +53,11 @@ class User:
         if len(result) < 1:
             return False
         return cls(result[0])
+    
     ############################################
     # method to save user's registration info.
     ############################################
     @classmethod
     def save_user(cls, data):
-        query = "INSERT INTO users (first_name, last_name, email, password, admin_id, created_at) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s, %(admin_id)s, NOW())"
+        query = "INSERT INTO users (first_name, last_name, email, password, created_at) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s, NOW())"
         return connectToMySQL("bug_tracker").query_db(query, data)

@@ -28,10 +28,11 @@ def create_user():
         "email" : request.form["email"] 
     }
     user_in_db = User.get_user_by_email(data)
+    # if user alrready at db, redirect user with flash message
     if user_in_db:
         flash("Email already in use, please use another email!")
         return redirect('/register')
-    #validate if the input are matching the validation rule
+    # validate if the input are matching to validation rule
     if not User.validate_user(request.form):
         return redirect('/register')
     # if no errors, we hash the password
@@ -42,7 +43,43 @@ def create_user():
         "last_name": request.form["last_name"],
         "email": request.form["email"],
         "password": pw_hash,
-        "admin_id": 0,
     }
-    User.save_user(data)
+    # insert will return the id for data we just stored
+    user_id = User.save_user(data)
+    session["user_id"] = user_id
+    return redirect("/")
+
+######################################
+# login route
+######################################
+@app.route("/login")
+def login():
+    return render_template("users/login.html")
+
+@app.route("/login_user", methods = ["POST"])
+def login_user():
+    #validate if email already exist at db
+    data = { 
+        "email" : request.form["email"] 
+    }
+    user_in_db = User.get_user_by_email(data)
+    # if user is not registered in the db
+    if not user_in_db:
+        flash("Invalid Login!!!")
+        return redirect("/login")
+    # if email exist at db, we check if hashed password matching or not
+    if not bcrypt.check_password_hash(user_in_db.password, request.form['password']):
+        # if we get False after checking the password
+        flash("Invalid Login!!!")
+        return redirect('/login')
+    # if the passwords matched, we set the user_id into session
+    session['user_id'] = user_in_db.id
+    return redirect("/")
+
+######################################
+# logout route
+######################################
+@app.route("/logout")
+def logout():
+    session.clear()
     return redirect("/")

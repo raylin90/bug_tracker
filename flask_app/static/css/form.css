@@ -14,7 +14,6 @@
 .form-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
 }
 
@@ -34,7 +33,7 @@ form label {
 }
 
 form input {
-    width: 200%;
+    min-width: 25vh;
     height: 35px;
     background: #f9f9f9;
     border-radius: 6px;
@@ -45,7 +44,7 @@ form input:focus {
     background: #fff;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
     padding: 5px;
     font-size: 16px;
 }
@@ -61,7 +60,12 @@ input[type=submit] {
     box-sizing: content-box;
 }
 
+.form-content a {
+    font-size: small;
+}
+
 .error-msg {
+    display: block;
     margin-top: 15px;
     color: #d50000;
     font-size: 16px;

@@ -91,27 +91,28 @@
                     <div class="profile-details">
                         <img src="../static/images/avatar.png" alt="avatar">
                         <div class="name-job">
-                            <div class="name">Ray Lin</div>
-                            <div class="job">Full Stack Developer</div>
+                            <div class="name"><a href="/login">Login</a></div>
+                            <div class="job"><a href="/register">Register</a></div>
                         </div>
                     </div>
-                    <i class="fas fa-sign-out-alt" id="logout"></i>
-                </div>
+                    <a href="/register"><i class="fas fa-sign-in-alt" id="logout"></i></a>
                 </div>
                 {% else: %}
                 <div class="profile">
                     <div class="profile-details">
                         <img src="../static/images/avatar.png" alt="avatar">
                         <div class="name-job">
-                            <div class="name"><a href="/login">Login</a></div>
-                            <div class="job"><a href="/register">Register</a></div>
+                            <div class="name">Ray Lin</div>
+                            <div class="job">Full Stack Developer</div>
                         </div>
                     </div>
-                    <i class="fas fa-sign-in-alt" id="logout"></i>
+                    <i class="fas fa-sign-out-alt" id="logout"></i>
                 </div>
             {% endif %}
         </div>
     </div>
+
+
     <div class="home-content">
         <div class="text">
             <img src="{{ url_for('static', filename='images/register_img.jpg') }}" alt="join_us">
@@ -141,6 +142,7 @@
                     </div>
                     <input type="submit" value="Create">
                 </form>
+                <a href="/login">Already have an account?</a>
                 <div class="error-msg">
                     {% with messages = get_flashed_messages() %}
                         {% if messages %}
