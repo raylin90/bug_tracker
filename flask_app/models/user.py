@@ -61,3 +61,23 @@ class User:
     def save_user(cls, data):
         query = "INSERT INTO users (first_name, last_name, email, password, created_at) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s, NOW())"
         return connectToMySQL("bug_tracker").query_db(query, data)
+
+    ############################################
+    # get the user whom logged in
+    ############################################
+    @classmethod
+    def get_user_by_id(cls, data):
+        query = "SELECT * FROM users LEFT JOIN admins ON users.id = admins.user_id WHERE users.id = %(id)s"
+        login_user = connectToMySQL("bug_tracker").query_db(query, data)
+        # print(results)
+        # return results
+        return cls(login_user[0])
+    
+    ############################################
+    # update user password
+    ############################################
+    @classmethod
+    def update_user_password(cls, data):
+        query = "UPDATE users SET password = %(password)s, updated_at = NOW() WHERE id=%(id)s;"
+        print("hi")
+        return connectToMySQL("bug_tracker").query_db(query, data)

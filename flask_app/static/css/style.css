@@ -257,12 +257,12 @@ body {
     font-size: 20px;
     border-radius: 12px;
     transition: 0.5s;
-    background: #1d1b31;
+    background: #fff;
 }
 
 .sidebar.active #logout {
     left: 90%;
-    background: none;
+    background: #fff;
 }
 
 .home-content {

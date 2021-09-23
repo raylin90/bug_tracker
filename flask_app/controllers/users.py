@@ -12,7 +12,15 @@ bcrypt = Bcrypt(app)
 ######################################
 @app.route("/")
 def dashboard():
-    return render_template("dashboard.html")
+    if "user_id" in session:
+        # get the user info when they login by using their session id
+        data = {
+            "id": session["user_id"]
+        }
+        user = User.get_user_by_id(data)
+    else:
+        user = ""
+    return render_template("dashboard.html", user = user)
 
 ######################################
 # register route
@@ -83,3 +91,49 @@ def login_user():
 def logout():
     session.clear()
     return redirect("/")
+
+######################################
+# change user pw route (only apply to registered user)
+######################################
+@app.route("/edit/user/<id>")
+def edit_user(id):
+    if "user_id" in session:
+    # get the user info when they login by using their session id
+        data = {
+            "id": session["user_id"]
+        }
+        user = User.get_user_by_id(data)
+    else:
+        flash("please login before view profile")
+        return redirect("/login")
+    return render_template("users/edit_user.html", user = user)
+
+@app.route("/update/user/<id>", methods = ["POST"])
+def update_user(id):
+    data = { 
+        "id" : session["user_id"]
+    }
+    user_in_db = User.get_user_by_id(data)
+    # check if old password matching to db or not
+    if not bcrypt.check_password_hash(user_in_db.password, request.form['old_password']):
+        # if we get False after checking the password
+        flash("Old Password is not correct, please try again!!!")
+        return redirect(f'/edit/user/{id}')
+    # if above is good ,validate and hash the password
+    if not User.validate_user(request.form):
+        return redirect(f'/edit/user/{id}')
+    pw_hash = bcrypt.generate_password_hash(request.form['password'])
+    # then save user info into database using prepared data dict.:
+    data = {
+        "password": pw_hash,
+        "id" : session["user_id"]
+    }
+    print(pw_hash)
+    User.update_user_password(data)
+    return redirect("/")
+
+# edge case if user tryint to click User btn before login sice no id param passed in
+@app.route("/edit/user/")
+def edit_user2():
+    flash("please login before viewing user profile")
+    return redirect("/login")
