@@ -118,39 +118,38 @@
             <div class="form-content">
                 <h2>Register</h2>
                 <br>
-                <form action="#" method="post">
+                <form action="/create_user" method="post">
                     <div class="form-item">
                         <label for="first_name">First Name:</label>
                         <input type="text" name="first_name">
-                        <p class="error-msg">Error Message</p>
                     </div>
                     <div class="form-item">
                         <label for="last_name">Last Name:</label>
                         <input type="text" name="last_name">
-                        <p class="error-msg">Error Message</p>
                     </div>
                     <div class="form-item">
                         <label for="email">Email:</label>
                         <input type="text" name="email">
-                        <p class="error-msg">Error Message</p>
                     </div>
                     <div class="form-item">
                         <label for="password">Password:</label>
                         <input type="password" name="password">   
-                        <p class="error-msg">Error Message</p>
-                    </div>
-                    <div class="form-item">
-                        <label for="first_name">First Name:</label>
-                        <input type="text" name="first_name">
-                        <p class="error-msg">Error Message</p>
                     </div>
                     <div class="form-item">
                         <label for="conf_password">Confirm Password:</label>
                         <input type="password" name="conf_password">
-                        <p class="error-msg">Error Message</p>
                     </div>
                     <input type="submit" value="Create">
                 </form>
+                <div class="error-msg">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class="text-danger">{{message}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
             </div>
         </div>
     </div>
