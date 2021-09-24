@@ -10,8 +10,8 @@
 </head>
 <body>
     <div class="text">
-        <button class="btn-blue"><a href="/">Back to Dashboard</a></button>
-        <h1>Edit User Admins Info.</h1>
+        <button class="btn-blue"><a href="/dashboard">Back to Dashboard</a></button>
+        <h1>All Admins Info.</h1>
         <br>
         <hr>
         <table>
@@ -23,7 +23,6 @@
                     <th>Job Title</th>
                     <th>Level</th>
                     <th>Branch</th>
-                    <th>Email</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -33,11 +32,14 @@
                     <td>{{ user.id }}</td>
                     <td>{{ user.first_name }}</td>
                     <td>{{ user.last_name }}</td>
-                    <td>{{ user.admins.job_title }}</td>
-                    <td>{{ user.admins.level_identifier }}</td>
-                    <td>{{ user.admins.branch }}</td>
-                    <td>{{ user.email }}</td>
-                    <td><button class="btn-gray"><a href="">View</a></button> || <button class="btn-tile"><a href="">Update</a></button> || <button class="btn-red"><a href="">Delete</a></button></td>
+                    <td>{{ user.job_title }}</td>
+                    <td>{{ user.level_identifier }}</td>
+                    <td>{{ user.branch }}</td>
+                    <td>
+                        <button class="btn-gray"><a href="/activate/admin/{{ user.id }}">Active</a></button> ||
+                        <button class="btn-gray"><a href="/view/admin/{{ user.id }}">View</a></button> || 
+                        <button class="btn-tile"><a href="/edit/admin/{{ user.id }}">Edit</a></button> || 
+                        <button class="btn-red"><a href="/delete/admin/{{ user.id }}">De-active</a></button></td>
                 </tr>
                 {% endfor %}
             </tbody>

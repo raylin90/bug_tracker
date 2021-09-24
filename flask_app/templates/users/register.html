@@ -36,7 +36,7 @@
                 <span class="tooltip">Dashboard</span>
             </li>
             <li>
-                <a href="/edit/user/{{ user.id }}">
+                <a href="#}">
                     <i class="fas fa-user"></i>
                     <span class="links-name">User</span>
                 </a>
@@ -86,29 +86,16 @@
             </li>
         </ul>
         <div class="profile-content">
-            {% if "user_id" not in session: %}
-                <div class="profile">
-                    <div class="profile-details">
-                        <img src="../static/images/avatar.png" alt="avatar">
-                        <div class="name-job">
-                            <div class="name"><a href="/login">Login</a></div>
-                            <div class="job"><a href="/register">Register</a></div>
-                        </div>
+            <div class="profile">
+                <div class="profile-details">
+                    <img src="../static/images/avatar.png" alt="avatar">
+                    <div class="name-job">
+                        <div class="name"><a href="/login">Login</a></div>
+                        <div class="job"><a href="/register">Register</a></div>
                     </div>
-                    <a href="/login"><i class="fas fa-sign-in-alt" id="logout"></i></a>
                 </div>
-                {% else: %}
-                <div class="profile">
-                    <div class="profile-details">
-                        <img src="../static/images/avatar.png" alt="avatar">
-                        <div class="name-job">
-                            <div class="name">{{ user.first_name }} {{ user.last_name }}</div>
-                            <div class="job">{{ user.job_title }}</div>
-                        </div>
-                    </div>
-                    <a href="/logout"><i class="fas fa-sign-out-alt" id="logout"></i></a>
-                </div>
-            {% endif %}
+                <a href="/login"><i class="fas fa-sign-in-alt" id="logout"></i></a>
+            </div>
         </div>
     </div>
 

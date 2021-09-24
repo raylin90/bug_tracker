@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Home Page</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form.css') }}">
     <script src="../static/js/script.js" defer></script>
     <!-- Font Awesome CDN Link  -->
     <script src="https://kit.fontawesome.com/37127f916b.js" crossorigin="anonymous"></script>
@@ -85,6 +84,7 @@
                 <span class="tooltip">Setting</span>
             </li>
         </ul>
+
         <div class="profile-content">
             <div class="profile">
                 <div class="profile-details">
@@ -99,35 +99,10 @@
         </div>
     </div>
 
-
+    
     <div class="home-content">
         <div class="text">
-            <img src="{{ url_for('static', filename='images/login_img.png') }}" alt="join_us">
-            <div class="form-content">
-                <h2>Login</h2>
-                <br>
-                <form action="/login_user" method="post">
-                    <div class="form-item">
-                        <label for="email">Email:</label>
-                        <input type="text" name="email">
-                    </div>
-                    <div class="form-item">
-                        <label for="password">Password:</label>
-                        <input type="password" name="password">   
-                    </div>
-                    <input type="submit" value="Login">
-                </form>
-                <a href="/register">Don't have account?</a>
-                <div class="error-msg">
-                    {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                            {% for message in messages %}
-                                <p class="text-danger">{{message}}</p>
-                            {% endfor %}
-                        {% endif %}
-                    {% endwith %}
-                </div>
-            </div>
+
         </div>
     </div>
 </body>

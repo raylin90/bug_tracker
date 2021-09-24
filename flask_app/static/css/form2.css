@@ -1,0 +1,63 @@
+.text {
+    margin: 50px;
+}
+
+form {
+    margin: 25px 0;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    padding: 5px 0;
+    font-weight: 600;
+}
+
+form input, select {
+    max-width: 50vh;
+    min-width: 25vh;
+    height: 35px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+input[type=text], input[type=password], select {
+    padding: 5px;
+    font-size: 16px;
+}
+
+.danger {
+    color: #f44336;
+}
+
+button {
+    padding: 7px;
+    border-radius: 4px;
+    box-shadow: 3px 3px #FFFFF0;
+}
+
+button a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-blue {
+    background-color: #00AAFF;
+    margin-bottom: 10px;
+}
+
+.btn-red {
+    background-color: #f44336;
+}
+
+.btn-tile {
+    background-color: #5F9EA0;
+}
+
+.btn-gray {
+    background-color: #808080;
+}

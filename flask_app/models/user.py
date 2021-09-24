@@ -3,7 +3,6 @@ from flask_app.config.mysqlconnection import connectToMySQL
 # import flask, so we can display flash message at HTML
 from flask import flash
 # import regex for pattern validation
-from flask_app.models.admin import Admin
 import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 NAME_REGEX = re.compile(r'^[a-zA-Z]+$')
@@ -20,7 +19,6 @@ class User:
         self.password = data['password']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
-        self.admins = Admin(data)
 
     ############################################
     # validation registration input method
@@ -91,11 +89,5 @@ class User:
     def get_users_admins_setting(cls):
         query = "SELECT * FROM users LEFT JOIN admins ON users.id = admins.user_id;"
         # results will be a list of dictionary
-        results = connectToMySQL("bug_tracker").query_db(query)
-        # print(results[0])
-        user_with_admins_info = []
-        # parse throught and store as a class instead of dict.
-        for x in results:
-            user_with_admins_info.append(cls(x))
-        # print(user_with_admins_info)
+        user_with_admins_info = connectToMySQL("bug_tracker").query_db(query)
         return user_with_admins_info

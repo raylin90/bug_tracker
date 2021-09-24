@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Information</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form2.css') }}">
+</head>
+<body>
+    <div class="text">
+        <button class="btn-blue"><a href="/dashboard">Back to Dashboard</a></button>
+        <button class="btn-blue"><a href="/admins/setting">Back to Admins</a></button>
+        <h1>View User Admin Info.</h1>
+        <br>
+        <hr>
+        <form>
+            <div class="form-item">
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" value={{ one_admin.first_name }} disabled>
+            </div>
+            <div class="form-item">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" value={{ one_admin.last_name }} disabled>
+            </div>
+            <div class="form-item">
+                <label for="email">Email:</label>
+                <input type="text" name="email" value={{ one_admin.email }} disabled>
+            </div>
+            <div class="form-item">
+                <label for="created_at">Acct created_at:</label>
+                <input type="text" name="created_at" value={{ one_admin.created_at }} disabled>
+            </div>
+            <div class="form-item">
+                <label for="level_identifier">Org. Level:</label>
+                <input type="text" name="level_identifier" value={{ one_admin.level_identifier}} disabled>
+            </div>
+            <div class="form-item">
+                <label for="branch">Org. Branch:</label>
+                <input type="text" name="branch" value={{ one_admin.branch}} disabled>
+            </div>
+            <div class="form-item">
+                <label for="job_title">Job Title</label>
+                <input type="text" name="job_title" value={{ one_admin.job_title}} disabled>
+            </div>
+        </form>
+        <button class="btn-tile"><a href="/edit/admin/{{ one_admin.id }}">Edit</a></button>
+        <button class="btn-red"><a href="/delete/admin/{{ one_admin.id }}">Delete</a></button></td>
+    </div>
+</body>
+</html>

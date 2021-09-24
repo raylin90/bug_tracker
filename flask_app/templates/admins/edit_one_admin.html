@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Admin Information</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form2.css') }}">
+</head>
+<body>
+    <div class="text">
+        <button class="btn-blue"><a href="/dashboard">Back to Dashboard</a></button>
+        <button class="btn-blue"><a href="/admins/setting">Back to Admins</a></button>
+        <h1>Edit User Admin Info.</h1>
+        <br>
+        <hr>
+        <form action="/update/admin/{{ one_admin.id }}" method="post">
+            <div class="form-item">
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" value={{ one_admin.first_name }}>
+            </div>
+            <div class="form-item">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" value={{ one_admin.last_name }}>
+            </div>
+            <div class="form-item">
+                <label for="email">Email:</label>
+                <input type="text" name="email" value={{ one_admin.email }}>
+            </div>
+            <br>
+            <div class="form-item danger">
+                <label for="password">Password:</label>
+                <input type="text" name="password" value={{ one_admin.password }}>
+                <p>******************************** approach with caution **************************************</p>
+            </div>
+            <br>
+            <div class="form-item">
+                <label for="level_identifier">Org. Level:</label>
+                <select name="level_identifier">
+                    <optgroup label="current:">
+                        <option value={{ one_admin.level_identifier }}>{{ one_admin.level_identifier }}</option>
+                    </optgroup>
+                    <optgroup label="choose from below:">
+                        <option value="0">0 - Inactive User</option>
+                        <option value="1">1 - Active User</option>
+                        <option value="5">5 - Admin</option>
+                        <option value="9">9 - Owner</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-item">
+                <label for="branch">Org. Branch:</label>
+                <select name="branch">
+                    <optgroup label="current:">
+                        <option value={{ one_admin.branch }}>{{ one_admin.branch }}</option>
+                        level_identifier }}</option>
+                    </optgroup>
+                        <optgroup label="choose from below:">
+                        <option value="JFK">JFK</option>
+                        <option value="LAX">LAX</option>
+                        <option value="ORD">ORD</option>
+                        <option value="MCI">MCI</option>
+                        <option value="PHX">PHX</option>
+                        <option value="SEA">SEA</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-item">
+                <label for="job_title">Job Title</label>
+                <select name="job_title">
+                    <optgroup label="current:">
+                        <option value={{ one_admin.job_title }}>{{ one_admin.job_title }}</option>
+                    </optgroup>
+                    <optgroup label="choose from below:">
+                        <option value="P">President</option>
+                        <option value="VP">VP</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Supervisor">Supervisor</option>
+                        <option value="TeamLead">TeamLead</option>
+                        <option value="DeskLevel">DeskLevel</option>
+                    </optgroup>
+                </select>
+                <input type="submit" value="Update">
+            </div>
+        </form>
+        <button class="btn-red"><a href="/delete/admin/{{ one_admin.id }}">Delete</a></button></td>
+    </div>
+</body>
+</html>

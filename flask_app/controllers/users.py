@@ -8,19 +8,11 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 ######################################
-# dashboard route
+# home route
 ######################################
 @app.route("/")
-def dashboard():
-    if "user_id" in session:
-        # get the user info when they login by using their session id
-        data = {
-            "id": session["user_id"]
-        }
-        user = User.get_user_by_id(data)
-    else:
-        user = ""
-    return render_template("dashboard.html", user = user)
+def home():
+    return render_template("index.html")
 
 ######################################
 # register route
@@ -55,7 +47,7 @@ def create_user():
     # insert will return the id for data we just stored
     user_id = User.save_user(data)
     session["user_id"] = user_id
-    return redirect("/")
+    return redirect("/dashboard")
 
 ######################################
 # login route
@@ -82,7 +74,24 @@ def login_user():
         return redirect('/login')
     # if the passwords matched, we set the user_id into session
     session['user_id'] = user_in_db.id
-    return redirect("/")
+    return redirect("/dashboard")
+
+######################################
+# dashboard route
+######################################
+@app.route("/dashboard")
+def dashboard():
+    # if user is not login, redirect them to login page
+    if "user_id" not in session:
+        flash("Please login before processing to Dashboard")
+        return redirect("/login")
+    
+    # get the user info when they login by using their session id
+    data = {
+        "id": session["user_id"]
+    }
+    user = User.get_user_by_id(data)
+    return render_template("dashboard.html", user = user)
 
 ######################################
 # logout route
@@ -97,15 +106,15 @@ def logout():
 ######################################
 @app.route("/edit/user/<id>")
 def edit_user(id):
-    if "user_id" in session:
-    # get the user info when they login by using their session id
-        data = {
-            "id": session["user_id"]
-        }
-        user = User.get_user_by_id(data)
-    else:
-        flash("please login before view profile")
+    # if user is not login, redirect them to login page
+    if "user_id" not in session:
+        flash("Please login before processing to User Profile Page")
         return redirect("/login")
+    # get the user info when they login by using their session id
+    data = {
+        "id": session["user_id"]
+    }
+    user = User.get_user_by_id(data)
     return render_template("users/edit_user.html", user = user)
 
 @app.route("/update/user/<id>", methods = ["POST"])
@@ -130,7 +139,7 @@ def update_user(id):
     }
     print(pw_hash)
     User.update_user_password(data)
-    return redirect("/")
+    return redirect("/dashboard")
 
 # edge case if user tryint to click User btn before login sice no id param passed in
 @app.route("/edit/user/")
