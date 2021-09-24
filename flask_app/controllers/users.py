@@ -137,3 +137,12 @@ def update_user(id):
 def edit_user2():
     flash("please login before viewing user profile")
     return redirect("/login")
+
+######################################
+# setup admins (only apply to owner)
+######################################
+@app.route("/admins/setting")
+def admins_setup():
+    # use left join to get all users with their admins info.
+    users_admins_info = User.get_users_admins_setting()
+    return render_template("/users/admins_setting.html", users_admins_info = users_admins_info)

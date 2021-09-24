@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Admins Setting</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css') }}">
+</head>
+<body>
+    <div class="text">
+        <button class="btn-blue"><a href="/">Back to Dashboard</a></button>
+        <h1>Edit User Admins Info.</h1>
+        <br>
+        <hr>
+        <table>
+            <thead>
+                <tr>
+                    <th>Uesr ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Job Title</th>
+                    <th>Level</th>
+                    <th>Branch</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users_admins_info: %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.admins.job_title }}</td>
+                    <td>{{ user.admins.level_identifier }}</td>
+                    <td>{{ user.admins.branch }}</td>
+                    <td>{{ user.email }}</td>
+                    <td><button class="btn-gray"><a href="">View</a></button> || <button class="btn-tile"><a href="">Update</a></button> || <button class="btn-red"><a href="">Delete</a></button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
