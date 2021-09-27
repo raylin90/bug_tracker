@@ -36,14 +36,19 @@
                     <td>{{ user.level_identifier }}</td>
                     <td>{{ user.branch }}</td>
                     <td>
-                        <button class="btn-gray"><a href="/activate/admin/{{ user.id }}">Active</a></button> ||
+                        {% if user.level_identifier %}
+                            <button class="btn-red"><a href="/delete/admin/{{ user.id }}">De-active</a></button> ||
+                            {% else: %}
+                            <button class="btn-yellow"><a href="/activate/admin/{{ user.id }}">Active</a></button> ||
+                        {% endif%}
                         <button class="btn-gray"><a href="/view/admin/{{ user.id }}">View</a></button> || 
-                        <button class="btn-tile"><a href="/edit/admin/{{ user.id }}">Edit</a></button> || 
-                        <button class="btn-red"><a href="/delete/admin/{{ user.id }}">De-active</a></button></td>
+                        <button class="btn-tile"><a href="/edit/admin/{{ user.id }}">Edit</a></button>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <p class="error-msg ">*** you must ACTIVATE admin user before EDIT Org. Level / Branch / Job Title</p>
     </div>
 </body>
 </html>

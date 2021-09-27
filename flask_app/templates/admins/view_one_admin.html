@@ -29,7 +29,7 @@
                 <input type="text" name="email" value={{ one_admin.email }} disabled>
             </div>
             <div class="form-item">
-                <label for="created_at">Acct created_at:</label>
+                <label for="created_at">User created_at:</label>
                 <input type="text" name="created_at" value={{ one_admin.created_at }} disabled>
             </div>
             <div class="form-item">
@@ -46,7 +46,8 @@
             </div>
         </form>
         <button class="btn-tile"><a href="/edit/admin/{{ one_admin.id }}">Edit</a></button>
-        <button class="btn-red"><a href="/delete/admin/{{ one_admin.id }}">Delete</a></button></td>
+        <p class=""></p>
+        <p class="error-msg ">*** you must ACTIVATE admin user before EDIT Org. Level / Branch / Job Title</p>
     </div>
 </body>
 </html>

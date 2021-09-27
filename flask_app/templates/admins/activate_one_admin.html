@@ -15,26 +15,7 @@
         <h1>Activate Admin User</h1>
         <br>
         <hr>
-        <form action="/update/admin/{{ one_admin.id }}" method="post">
-            <div class="form-item">
-                <label for="first_name">First Name:</label>
-                <input type="text" name="first_name" value={{ one_admin.first_name }}>
-            </div>
-            <div class="form-item">
-                <label for="last_name">Last Name:</label>
-                <input type="text" name="last_name" value={{ one_admin.last_name }}>
-            </div>
-            <div class="form-item">
-                <label for="email">Email:</label>
-                <input type="text" name="email" value={{ one_admin.email }}>
-            </div>
-            <br>
-            <div class="form-item danger">
-                <label for="password">Password:</label>
-                <input type="text" name="password" value={{ one_admin.password }}>
-                <p>******************************** approach with caution **************************************</p>
-            </div>
-            <br>
+        <form action="/create/admin/{{ one_admin.id }}" method="post">
             <div class="form-item">
                 <label for="level_identifier">Org. Level:</label>
                 <select name="level_identifier">
@@ -42,9 +23,8 @@
                         <option value={{ one_admin.level_identifier }}>{{ one_admin.level_identifier }}</option>
                     </optgroup>
                     <optgroup label="choose from below:">
-                        <option value="0">0 - Inactive User</option>
                         <option value="1">1 - Active User</option>
-                        <option value="5">5 - Admin</option>
+                        <option value="5">8 - Admin</option>
                         <option value="9">9 - Owner</option>
                     </optgroup>
                 </select>
@@ -81,10 +61,10 @@
                         <option value="DeskLevel">DeskLevel</option>
                     </optgroup>
                 </select>
-                <input type="submit" value="Update">
+                <input class="btn-blue" type="submit" value="Activate">
             </div>
         </form>
-        <button class="btn-red"><a href="/delete/admin/{{ one_admin.id }}">Delete</a></button></td>
+        <button class="btn-gray"><a href="/view/admin/{{ one_admin.id }}">View</a></button></td>
     </div>
 </body>
 </html>

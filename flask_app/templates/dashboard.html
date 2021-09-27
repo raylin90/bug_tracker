@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css') }}">
     <script src="../static/js/script.js" defer></script>
     <!-- Font Awesome CDN Link  -->
     <script src="https://kit.fontawesome.com/37127f916b.js" crossorigin="anonymous"></script>
@@ -114,7 +115,14 @@
     
     <div class="home-content">
         <div class="text">
-
+            <div class="error-msg">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="text-danger">{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
         </div>
     </div>
 </body>

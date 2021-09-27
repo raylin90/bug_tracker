@@ -21,7 +21,6 @@ class Admin:
     def get_admins_by_user_id(cls, data):
         query = "SELECT * FROM users LEFT JOIN admins ON users.id = admins.user_id WHERE users.id = %(id)s;"
         one_admins_info = connectToMySQL("bug_tracker").query_db(query, data)
-        print(one_admins_info)
         return one_admins_info[0]
     
     ############################################

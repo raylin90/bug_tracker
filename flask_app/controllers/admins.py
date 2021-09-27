@@ -9,11 +9,16 @@ from flask_app.models.admin import Admin
 ######################################
 @app.route("/view/admin/<id>")
 def view_one_admin(id):
+    # check if user has enough admin lvl to new the page
+    if not session["admin_level"] or session["admin_level"] < 8:
+        flash("Setting Page Only Open to Admin User")
+        return redirect("/dashboard")
     data = {
         "id": int(id),
     }
     # fetch data from database
     one_admin = Admin.get_admins_by_user_id(data)
+    print(one_admin)
     return render_template("admins/view_one_admin.html", one_admin = one_admin)
 
 ######################################
@@ -21,6 +26,10 @@ def view_one_admin(id):
 ######################################
 @app.route("/activate/admin/<id>")
 def activate_one_admin(id):
+    # check if user has enough admin lvl to new the page
+    if not session["admin_level"] or session["admin_level"] < 8:
+        flash("Setting Page Only Open to Admin User")
+        return redirect("/dashboard")
     data = {
         "id": int(id),
     }
@@ -28,7 +37,7 @@ def activate_one_admin(id):
     one_admin = Admin.get_admins_by_user_id(data)
     return render_template("admins/activate_one_admin.html", one_admin = one_admin)
 
-@app.route("/update/admin/<id>", methods = ["POST"])
+@app.route("/create/admin/<id>", methods = ["POST"])
 def process_activate_admin_acct(id):
     data = {
         "id": int(id),
@@ -44,6 +53,10 @@ def process_activate_admin_acct(id):
 ######################################
 @app.route("/edit/admin/<id>")
 def edit_one_admin(id):
+    # check if user has enough admin lvl to new the page
+    if not session["admin_level"] or session["admin_level"] < 8:
+        flash("Setting Page Only Open to Admin User")
+        return redirect("/dashboard")
     data = {
         "id": int(id),
     }
@@ -73,6 +86,10 @@ def update_one_admin(id):
 ######################################
 @app.route("/delete/admin/<id>")
 def delete_one_admins(id):
+    # check if user has enough admin lvl to new the page
+    if not session["admin_level"] or session["admin_level"] < 8:
+        flash("Setting Page Only Open to Admin User")
+        return redirect("/dashboard")
     data = {
         "id": int(id),
     }

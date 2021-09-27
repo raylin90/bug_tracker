@@ -3,6 +3,7 @@ from flask_app import app
 # import render_template(view HTML), redirect(route to different URL), request(get data from HTML), session(store session value), flask(display flash message
 from flask import render_template,redirect,request,session, flash
 from flask_app.models.user import User
+from flask_app.models.admin import Admin
 # Bcrypt to hash the password
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
@@ -144,7 +145,10 @@ def update_user(id):
 # edge case if user tryint to click User btn before login sice no id param passed in
 @app.route("/edit/user/")
 def edit_user2():
-    flash("please login before viewing user profile")
+    # if user is not login, redirect them to login page
+    if "user_id" not in session:
+        flash("Please login before viewing user profile")
+        return redirect("/login")
     return redirect("/login")
 
 ######################################
@@ -152,6 +156,16 @@ def edit_user2():
 ######################################
 @app.route("/admins/setting")
 def admins_setup():
+    data = {
+        "id": session["user_id"],
+    }
+    # fetch data from database about admin level
+    one_admin = Admin.get_admins_by_user_id(data)
+    # set admin level into session, because we only one certain users in the setting page
+    session["admin_level"] = one_admin["level_identifier"]
+    if not session["admin_level"] or session["admin_level"] < 8:
+        flash("Setting Page Only Open to Admin User")
+        return redirect("/dashboard")
     # use left join to get all users with their admins info.
     users_admins_info = User.get_users_admins_setting()
     return render_template("/users/admins_setting.html", users_admins_info = users_admins_info)

@@ -38,11 +38,16 @@ button {
     padding: 7px;
     border-radius: 4px;
     box-shadow: 3px 3px #FFFFF0;
+    min-width: 75px;
 }
 
 button a {
     color: #fff;
     text-decoration: none;
+}
+
+.btn-yellow {
+    background-color: #00FF6C;
 }
 
 .btn-blue {
@@ -60,4 +65,24 @@ button a {
 
 .btn-gray {
     background-color: #808080;
+}
+
+input[type=submit] {
+    margin-top: 10px;
+    padding: 5px;
+    width: 70px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #fff;
+    background: #00AAFF;
+    box-sizing: content-box;
+}
+
+.error-msg {
+    display: block;
+    margin-top: 15px;
+    color: #d50000;
+    font-size: 16px;
+    border-radius: 6px;
+    line-height: 1.5;
 }

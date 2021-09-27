@@ -43,6 +43,7 @@ button {
     padding: 7px;
     border-radius: 4px;
     box-shadow: 3px 3px #FFFFF0;
+    min-width: 75px;
 }
 
 button a {
@@ -55,6 +56,10 @@ button a {
     margin-bottom: 10px;
 }
 
+.btn-yellow {
+    background-color: #FFD700;
+}
+
 .btn-red {
     background-color: #f44336;
 }
@@ -65,4 +70,13 @@ button a {
 
 .btn-gray {
     background-color: #808080;
+}
+
+.error-msg {
+    display: block;
+    margin-top: 15px;
+    color: #d50000;
+    font-size: 16px;
+    border-radius: 6px;
+    line-height: 1.5;
 }

@@ -32,7 +32,7 @@
             <div class="form-item danger">
                 <label for="password">Password:</label>
                 <input type="text" name="password" value={{ one_admin.password }}>
-                <p>******************************** approach with caution **************************************</p>
+                <p>****************** approach with caution ******************<p>
             </div>
             <br>
             <div class="form-item">
@@ -42,9 +42,8 @@
                         <option value={{ one_admin.level_identifier }}>{{ one_admin.level_identifier }}</option>
                     </optgroup>
                     <optgroup label="choose from below:">
-                        <option value="0">0 - Inactive User</option>
                         <option value="1">1 - Active User</option>
-                        <option value="5">5 - Admin</option>
+                        <option value="5">8 - Admin</option>
                         <option value="9">9 - Owner</option>
                     </optgroup>
                 </select>
@@ -84,7 +83,7 @@
                 <input type="submit" value="Update">
             </div>
         </form>
-        <button class="btn-red"><a href="/delete/admin/{{ one_admin.id }}">Delete</a></button></td>
+        <p class="error-msg ">*** you must ACTIVATE admin user before EDIT Org. Level / Branch / Job Title</p>
     </div>
 </body>
 </html>
