@@ -43,7 +43,7 @@ class Ticket:
     def show_all_tickets(cls):
         query = "SELECT tickets.id, title, description, urgency, DATE_FORMAT(est_due_date, '%M %D %Y') AS est_due_date, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id;"
         results = connectToMySQL("bug_tracker").query_db(query)
-        return results[0]
+        return results
 
 # ######################################
 # # retrieve ONE ticket

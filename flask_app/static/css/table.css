@@ -1,11 +1,13 @@
 .text {
     margin: 50px;
+    font-size: medium;
 }
 
 table {
     border-collapse: collapse;
     margin: 25px 0;
     min-width: 1000px;
+    max-width: 1250px;
     border-radius: 0.5em;
     overflow: hidden;
 }
@@ -18,11 +20,20 @@ table thead tr {
 
 table th {
     height: 50px;
+    z-index: -99;
+    padding-right: 20px;
+}
+
+.ticket-title {
+    max-width: 780px;
+    overflow-wrap:break-word;
+    word-break:break-all;
 }
 
 table td {
     padding: 12px 0;
     text-align: center;
+
 }
 
 table tbody tr {

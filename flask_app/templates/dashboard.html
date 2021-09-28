@@ -130,32 +130,31 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Uesr ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Job Title</th>
-                        <th>Level</th>
-                        <th>Branch</th>
+                        <th>Ticket No.</th>
+                        <th>Title</th>
+                        <th>Urgency</th>
+                        <th>Requestor</th>
+                        <th>Assigned To</th>
+                        <th>Est. Due Date</th>
+                        <th>Status</th>
+                        <th>Timeline</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for user in users_admins_info: %}
+                    {% for ticket in all_tickets%}
                     <tr>
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.first_name }}</td>
-                        <td>{{ user.last_name }}</td>
-                        <td>{{ user.job_title }}</td>
-                        <td>{{ user.level_identifier }}</td>
-                        <td>{{ user.branch }}</td>
+                        <td>{{ticket.id}}</td>
+                        <td class = "ticket-title">{{ticket.title}}</td>
+                        <td>{{ticket.urgency}}</td>
+                        <td>{{ticket.first_name}}</td>
+                        <td>pending</td>
+                        <td>{{ticket.est_due_date}}</td>
+                        <td>{{ticket.status}}</td>
+                        <td>pending</td>
                         <td>
-                            {% if user.level_identifier %}
-                                <button class="btn-red"><a href="/delete/admin/{{ user.id }}">De-active</a></button> ||
-                                {% else: %}
-                                <button class="btn-yellow"><a href="/activate/admin/{{ user.id }}">Active</a></button> ||
-                            {% endif%}
-                            <button class="btn-gray"><a href="/view/admin/{{ user.id }}">View</a></button> || 
-                            <button class="btn-tile"><a href="/edit/admin/{{ user.id }}">Edit</a></button>
+                            <a href="/view/ticket/{{ticket.id}}">View</a> || 
+                            <a href="/edit/ticket/{{ticket.id}}">Edit</a>
                         </td>
                     </tr>
                     {% endfor %}

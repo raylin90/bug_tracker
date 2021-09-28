@@ -43,27 +43,6 @@ def save_ticket():
     Ticket.save_ticket(data)
     return redirect ("/dashboard")
 
-
-
-
-
-# ######################################
-# # dashboard route
-# ######################################
-# @app.route("/dashboard")
-# def dashboard():
-
-#     # pulling the login user information
-#     data = {
-#         "id" : session['user_id'],
-#     }
-#     user = User.logined_user(data)
-
-#     tickets = Ticket.show_all_tickets()
-
-#     return render_template("users/dashboard.html", user = user, tickets = tickets)
-
-
 # ######################################
 # # view ticket route
 # ######################################

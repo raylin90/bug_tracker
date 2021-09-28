@@ -1,5 +1,6 @@
 .text {
     display: flex;
+    font-size: medium;
 }
 
 .text img {

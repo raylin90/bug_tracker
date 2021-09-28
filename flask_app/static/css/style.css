@@ -122,7 +122,7 @@ body {
 #search-icon {
     position: absolute;
     /* z-index specifies the stack order of an element, 1 is on top, -1 is below*/
-    z-index: 1;
+    z-index: 99;
     color: #fff;
     font-size: 22px;
     transition: 0.5;
@@ -276,8 +276,6 @@ body {
 }
 
 .home-content .text {
-    font-size: 25px;
-    font-weight: 500px;
     color: #1d1b31;
     /* margin: 12px; */
 }
