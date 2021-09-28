@@ -91,3 +91,13 @@ class User:
         # results will be a list of dictionary
         user_with_admins_info = connectToMySQL("bug_tracker").query_db(query)
         return user_with_admins_info
+
+    ############################################
+    # get all users
+    ############################################
+    @classmethod
+    def get_all_users(cls):
+        query = "SELECT * FROM users;"
+        # results will be a list of dictionary
+        users = connectToMySQL("bug_tracker").query_db(query)
+        return users

@@ -10,10 +10,11 @@ class Ticket:
         self.description = data['description']
         self.urgency = data['urgency']
         self.est_due_date = data['est_due_date']
+        self.status = data['status']
+        self.assigned_to = data['assigned_to']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
-    
     ######################################
     # ticket validation
     ######################################
@@ -54,13 +55,13 @@ class Ticket:
         ticket = connectToMySQL("bug_tracker").query_db(query, data)
         return ticket[0]
 
-# ######################################
-# # update ticket
-# ######################################
-#     @classmethod
-#     def update_one_ticket(cls, data):
-#         query = "UPDATE tickets SET name = %(name)s, description = %(description)s, urgency = %(urgency)s, est_due_date = %(est_due_date)s, status= %(status)s WHERE tickets.id=%(id)s;"
-#         return connectToMySQL("bug_tracker_schema").query_db(query, data)
+######################################
+# update ticket
+######################################
+    @classmethod
+    def update_one_ticket(cls, data):
+        query = "UPDATE tickets SET title = %(title)s, description = %(description)s, urgency = %(urgency)s, est_due_date = %(est_due_date)s, status= %(status)s, assigned_to= %(assigned_to)s, updated_at= NOW() WHERE tickets.id=%(id)s;"
+        return connectToMySQL("bug_tracker").query_db(query, data)
 
 # ######################################
 # # search ticket

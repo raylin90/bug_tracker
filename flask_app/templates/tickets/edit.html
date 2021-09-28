@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit a Ticket</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form2.css') }}">
+</head>
+<body>
+    <div class="text">
+
+        <div class="error-msg">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-danger">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    
+        <h1>Edit Ticket No. {{ ticket.id}}</h1>
+        <form action="/update/ticket/{{ticket.id}}" method="post">
+            <div class="form-item">
+                <label for="title">Title:</label>
+                <input type="text" name="title" value={{ ticket.title }}>
+            </div>
+            <div class="form-item">
+                <label for="description">Description:</label>
+                <textarea name="description" cols="30" rows="10">{{ ticket.description }}</textarea>
+            </div>
+            <div class="form-item">
+                <label for="urgency">Urgency:</label>
+                <select name="urgency">
+                    <option value={{ ticket.urgency }}>{{ ticket.urgency }}</option>
+                    <optgroup label="choose from below:">
+                        <option value="None">None</option>
+                        <option value="Mild">Mild</option>
+                        <option value="Moderate">Moderate</option>
+                        <option value="Severe">Severe</option>
+                        <option value="URGENT">URGENT</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-item">
+                <label for="est_due_date">Est. Due Date:</label>
+                <input type="date" name="est_due_date" value={{ticket.est_due_date}}>
+            </div>
+            <div class="form-item">
+                <label for="status">Status:</label>
+                <select name="status">
+                    <option value={{ ticket.status }}>{{ ticket.status }}</option>
+                    <optgroup label="Stage:">
+                        <option value="Open">Open</option>
+                        <option value="Approved">Approved</option> 
+                        <option value="Assigned">Assigned</option>
+                        <option value="WIP">WIP</option>
+                        <option value="Trouble Shooting">Trouble Shooting</option>
+                        <option value="Review">Review</option>
+                        <option value="Closed">Closed</option>
+                        <option value="On Hold">On Hold</option>
+                        <option value="Stuck">Stuck</option>
+                        <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+            <div class="form-item">
+                <label for="created_at">Ticket created_at:</label>
+                <input type="date" name="created_at" value={{ticket.created_at}} disabled>
+            </div>
+            <div class="form-item">
+                <label for="branch">Ticket branch:</label>
+                <input type="text" name="branch" value={{ticket.branch}} disabled>
+            </div>
+            <div class="form-item">
+                <label for="first_name">Ticket Requestor:</label>
+                <input type="text" name="first_name" value={{ticket.first_name}} disabled>
+            </div>
+            <div class="form-item">
+                <label for="assigned_to">Ticket Assigned To:</label>
+                <select name="assigned_to">
+                    {% for user in users %}
+                    <option value={{ user.id }}>{{ user.first_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" value="Update">
+        </form>
+        <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button>
+    </div>
+</body>
+</html>

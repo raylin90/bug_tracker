@@ -4,6 +4,7 @@ from flask_app import app
 from flask import render_template,redirect,request,session, flash
 from flask_app.models.ticket import Ticket
 from flask_app.models.admin import Admin
+from flask_app.models.user import User
 
 ######################################
 # create a new ticket
@@ -56,42 +57,35 @@ def view_ticket(id):
     print(ticket)
     return render_template("tickets/view.html", ticket = ticket)
 
-# ######################################
-# # edit & update ticket route
-# ######################################
-# @app.route("/edit/ticket/<id>")
-# def edit_ticket(id):
+######################################
+# edit & update ticket route
+######################################
+@app.route("/edit/ticket/<id>")
+def edit_ticket(id):
+    data = {
+        "id" : int(id),
+    }
+    ticket = Ticket.show_one_ticket(data)
+    users = User.get_all_users()
+    # print(users)
+    return render_template("tickets/edit.html", ticket = ticket, users = users)
 
-#     # pass the ticket id# to function to retrieve specific id#
-#     data = {
-#         "id" : int(id),
-#     }
-#     # show pre-filled information for user's easy refeerence
-#     ticket = Ticket.show_one_ticket(data)
-    
-#     return render_template("tickets/edit.html", ticket = ticket)
-
-# @app.route("/update/ticket/<id>", methods=["POST"])
-# def update_ticket(id):
-#     print("WHERE AM I?")
-#     # pass the ticket id# to function to retrieve specific id#
-#     data = {
-#         "name" : request.form["name"],
-#         "description" : request.form["description"],
-#         "urgency" : request.form["urgency"], 
-#         "est_due_date" : request.form["est_due_date"],
-#         "status" : request.form["status"],
-#         "id" : int(id),
-#     }
-#     # validate the input
-#     if not Ticket.validate_ticket(data):
-#         return redirect(f'/edit/ticket/{id}')
-
-#     # update to db
-#     Ticket.update_one_ticket(data)
-
-#     return redirect("/dashboard")
-
+@app.route("/update/ticket/<id>", methods=["POST"])
+def update_ticket(id):
+    data = {
+        "title" : request.form["title"],
+        "description" : request.form["description"],
+        "urgency" : request.form["urgency"], 
+        "est_due_date" : request.form["est_due_date"],
+        "status" : request.form["status"],
+        "assigned_to" : request.form["assigned_to"],
+        "id" : int(id),
+    }
+    # validate the input
+    if not Ticket.validate_ticket(data):
+        return redirect(f'/edit/ticket/{id}')
+    Ticket.update_one_ticket(data)
+    return redirect("/dashboard")
 
 # ######################################
 # # search ticket route

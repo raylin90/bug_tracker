@@ -95,7 +95,7 @@ def dashboard():
     user = User.get_user_by_id(data)
     # get all tickets from db
     all_tickets = Ticket.show_all_tickets()
-    print(all_tickets)
+    # print(all_tickets)
     return render_template("dashboard.html", user = user, all_tickets = all_tickets)
 
 ######################################
