@@ -153,8 +153,8 @@
                         <td>{{ticket.status}}</td>
                         <td>pending</td>
                         <td>
-                            <a href="/view/ticket/{{ticket.id}}">View</a> || 
-                            <a href="/edit/ticket/{{ticket.id}}">Edit</a>
+                            <button class="btn-gray"><a href="/view/ticket/{{ticket.id}}">View</a></button> || 
+                            <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button>
                         </td>
                     </tr>
                     {% endfor %}

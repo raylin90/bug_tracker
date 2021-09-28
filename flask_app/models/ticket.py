@@ -41,18 +41,18 @@ class Ticket:
     ######################################
     @classmethod
     def show_all_tickets(cls):
-        query = "SELECT tickets.id, title, description, urgency, DATE_FORMAT(est_due_date, '%M %D %Y') AS est_due_date, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id;"
+        query = "SELECT tickets.id, title, description, urgency, DATE_FORMAT(est_due_date, '%m/%d/%Y') AS est_due_date, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id;"
         results = connectToMySQL("bug_tracker").query_db(query)
         return results
 
-# ######################################
-# # retrieve ONE ticket
-# ######################################
-#     @classmethod
-#     def show_one_ticket(cls, data):
-#         query = "SELECT * FROM tickets JOIN users ON tickets.user_id = users.id WHERE tickets.id=%(id)s;"
-#         ticket = connectToMySQL("bug_tracker_schema").query_db(query, data)
-#         return ticket[0]
+    ######################################
+    # retrieve ONE ticket
+    ######################################
+    @classmethod
+    def show_one_ticket(cls, data):
+        query = "SELECT * FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id WHERE tickets.id = %(id)s;"
+        ticket = connectToMySQL("bug_tracker").query_db(query, data)
+        return ticket[0]
 
 # ######################################
 # # update ticket

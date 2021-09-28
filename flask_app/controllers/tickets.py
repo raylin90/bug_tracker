@@ -43,20 +43,18 @@ def save_ticket():
     Ticket.save_ticket(data)
     return redirect ("/dashboard")
 
-# ######################################
-# # view ticket route
-# ######################################
-# @app.route("/view/ticket/<id>")
-# def view_ticket(id):
-
-#     # pass the ticket id# to function to retrieve specific id#
-#     data = {
-#         "id" : int(id),
-#     }
-
-#     # show pre-filled information for user's easy refeerence
-#     ticket = Ticket.show_one_ticket(data)
-#     return render_template("tickets/view.html", ticket = ticket)
+######################################
+# view ticket route
+######################################
+@app.route("/view/ticket/<id>")
+def view_ticket(id):
+    data = {
+        "id" : int(id),
+    }
+    # show pre-filled information for user's easy refeerence
+    ticket = Ticket.show_one_ticket(data)
+    print(ticket)
+    return render_template("tickets/view.html", ticket = ticket)
 
 # ######################################
 # # edit & update ticket route
