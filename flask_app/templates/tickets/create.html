@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Ticket</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form2.css') }}">
+</head>
+<body>
+    <div class="text">
+        <h1>Create a New Ticket</h1>
+        <form action="/save_ticket" method="post">
+            <div class="form-item">
+                <label for="title">Title:</label>
+                <input type="text" name="title">
+            </div>
+            <div class="form-item">
+                <label for="description">Description:</label>
+                <textarea name="description" cols="30" rows="10"></textarea>
+            </div>
+            <div class="form-item">
+                <label for="urgency">Urgency:</label>
+                <select name="urgency" required>
+                    <option value="None">None</option>
+                    <option value="Mild">Mild</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Severe">Severe</option>
+                    <option value="URGENT">URGENT</option>
+                </select>
+            </div>
+            <div class="form-item">
+                <label for="est_due_date">Est. Due Date:</label>
+                <input type="date" name="est_due_date" required>
+            </div>
+            <input type="hidden" name="status" value="Open">
+            <input type="submit" value="Create">
+        </form>
+
+        <div class="error-msg">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-danger">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</body>
+</html>

@@ -43,7 +43,7 @@
                 <span class="tooltip">User</span>
             </li>
             <li>
-                <a href="#">
+                <a href="/create_ticket">
                     <i class="fas fa-plus"></i>
                     <span class="links-name">Add Ticket</span>
                 </a>
@@ -123,7 +123,44 @@
                         {% endfor %}
                     {% endif %}
                 {% endwith %}
-        </div>
+            </div>
+            <h3>All Open Tickets: </h3>
+            <br>
+            <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Uesr ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Job Title</th>
+                        <th>Level</th>
+                        <th>Branch</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users_admins_info: %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>{{ user.job_title }}</td>
+                        <td>{{ user.level_identifier }}</td>
+                        <td>{{ user.branch }}</td>
+                        <td>
+                            {% if user.level_identifier %}
+                                <button class="btn-red"><a href="/delete/admin/{{ user.id }}">De-active</a></button> ||
+                                {% else: %}
+                                <button class="btn-yellow"><a href="/activate/admin/{{ user.id }}">Active</a></button> ||
+                            {% endif%}
+                            <button class="btn-gray"><a href="/view/admin/{{ user.id }}">View</a></button> || 
+                            <button class="btn-tile"><a href="/edit/admin/{{ user.id }}">Edit</a></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
     </div>
 </body>
 </html>

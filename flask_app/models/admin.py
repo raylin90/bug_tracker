@@ -1,7 +1,5 @@
 # import mysqlconnection, so we can connecto SQL database
 from flask_app.config.mysqlconnection import connectToMySQL
-# import flask, so we can display flash message at HTML
-from flask import flash
 
 # model the class after the user table from our database
 class Admin:
@@ -22,6 +20,15 @@ class Admin:
         query = "SELECT * FROM users LEFT JOIN admins ON users.id = admins.user_id WHERE users.id = %(id)s;"
         one_admins_info = connectToMySQL("bug_tracker").query_db(query, data)
         return one_admins_info[0]
+
+    ############################################
+    # method to only get admins info.
+    ############################################
+    @classmethod
+    def get_admins_info(cls, data):
+        query = "SELECT * FROM admins WHERE user_id = %(id)s;"
+        one_admins_info = connectToMySQL("bug_tracker").query_db(query, data)
+        return one_admins_info
     
     ############################################
     # activate admin acct. by assigning default value (so we can insert to db, and update later)

@@ -4,6 +4,7 @@ from flask_app import app
 from flask import render_template,redirect,request,session, flash
 from flask_app.models.user import User
 from flask_app.models.admin import Admin
+from flask_app.models.ticket import Ticket
 # Bcrypt to hash the password
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
@@ -92,7 +93,8 @@ def dashboard():
         "id": session["user_id"]
     }
     user = User.get_user_by_id(data)
-    return render_template("dashboard.html", user = user)
+    all_tickets = Ticket.show_all_tickets()
+    return render_template("dashboard.html", user = user, all_tickets = all_tickets)
 
 ######################################
 # logout route
