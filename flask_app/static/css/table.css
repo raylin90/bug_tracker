@@ -91,3 +91,7 @@ button a {
     border-radius: 6px;
     line-height: 1.5;
 }
+
+.danger-msg {
+    color: #FF8C00;
+}

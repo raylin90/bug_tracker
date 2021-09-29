@@ -5,6 +5,7 @@ from flask import render_template,redirect,request,session, flash
 from flask_app.models.ticket import Ticket
 from flask_app.models.admin import Admin
 from flask_app.models.user import User
+from flask_app.models.comment import Comment
 
 ######################################
 # create a new ticket
@@ -68,7 +69,17 @@ def edit_ticket(id):
     ticket = Ticket.show_one_ticket(data)
     users = User.get_all_users()
     # print(users)
-    return render_template("tickets/edit.html", ticket = ticket, users = users)
+    # print(ticket["assigned_to"])
+    comments = Comment.get_all_comments(data)
+    print("1111111")
+    print(comments)
+    data = {
+        "id": int(ticket["assigned_to"])
+    }
+    assigned_to_user = User.get_user_by_id(data)
+    print("22222222")
+    print(assigned_to_user)
+    return render_template("tickets/edit.html", ticket = ticket, users = users, assigned_to_user = assigned_to_user, comments = comments)
 
 @app.route("/update/ticket/<id>", methods=["POST"])
 def update_ticket(id):
@@ -81,10 +92,26 @@ def update_ticket(id):
         "assigned_to" : request.form["assigned_to"],
         "id" : int(id),
     }
-    # validate the input
+    # validate ticket input
     if not Ticket.validate_ticket(data):
         return redirect(f'/edit/ticket/{id}')
     Ticket.update_one_ticket(data)
+    return redirect("/dashboard")
+
+######################################
+# add comment for ticket
+######################################
+@app.route("/update/comment/<id>", methods=["POST"])
+def update_comment(id):
+    # validate comment input
+    data = {
+        "text": request.form["text"],
+        "user_id": session["user_id"],
+        "ticket_id": int(id)
+    }
+    if not Comment.validate_comment(data):
+        return redirect(f'/edit/ticket/{id}')
+    Comment.save_comment(data)
     return redirect("/dashboard")
 
 # ######################################

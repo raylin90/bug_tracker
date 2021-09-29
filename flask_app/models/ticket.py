@@ -42,7 +42,7 @@ class Ticket:
     ######################################
     @classmethod
     def show_all_tickets(cls):
-        query = "SELECT tickets.id, title, description, urgency, DATE_FORMAT(est_due_date, '%m/%d/%Y') AS est_due_date, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id;"
+        query = "SELECT tickets.id, title, description, urgency, DATE_FORMAT(est_due_date, '%m/%d/%Y') AS est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id;"
         results = connectToMySQL("bug_tracker").query_db(query)
         return results
 
@@ -55,9 +55,9 @@ class Ticket:
         ticket = connectToMySQL("bug_tracker").query_db(query, data)
         return ticket[0]
 
-######################################
-# update ticket
-######################################
+    ######################################
+    # update ticket
+    ######################################
     @classmethod
     def update_one_ticket(cls, data):
         query = "UPDATE tickets SET title = %(title)s, description = %(description)s, urgency = %(urgency)s, est_due_date = %(est_due_date)s, status= %(status)s, assigned_to= %(assigned_to)s, updated_at= NOW() WHERE tickets.id=%(id)s;"

@@ -1,0 +1,143 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.text {
+    margin: 50px;
+    font-size: medium;
+    display: flex;
+}
+
+form {
+    margin: 25px 0;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    padding: 5px 0;
+    font-weight: 600;
+}
+
+form input, select {
+    height: 35px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+input[type=text], input[type=password], input[type=date], select, textarea {
+    padding: 5px;
+    font-size: 16px;
+}
+
+textarea {
+    height: 250px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.danger {
+    color: #f44336;
+}
+
+button {
+    padding: 7px;
+    border-radius: 4px;
+    box-shadow: 3px 3px #FFFFF0;
+    min-width: 75px;
+}
+
+button a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.btn-yellow {
+    background-color: #00FF6C;
+}
+
+.btn-blue {
+    background-color: #00AAFF;
+    margin-bottom: 10px;
+}
+
+.btn-red {
+    background-color: #f44336;
+}
+
+.btn-tile {
+    background-color: #5F9EA0;
+}
+
+.btn-gray {
+    background-color: #808080;
+}
+
+input[type=submit] {
+    margin-top: 10px;
+    padding: 5px;
+    width: 70px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #fff;
+    background: #00AAFF;
+    box-sizing: content-box;
+}
+
+.error-msg {
+    display: block;
+    margin-top: 15px;
+    color: #d50000;
+    font-size: 16px;
+    border-radius: 6px;
+    line-height: 1.5;
+}
+
+.left {
+    max-width: 35vw;
+    min-width: 35vw;
+}
+
+.right {
+    margin-left: 150px;
+    max-width: 35vw;
+    min-width: 35vw;
+}
+
+.card {
+    max-width: 35vw;
+    min-width: 35vw;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 2px;
+}
+
+.title {
+    display: flex;
+    border-bottom: 1px solid #ccc;;
+    padding: 5px;
+}
+
+.card img {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+}
+
+.title p:nth-child(2) {
+    font-size: 0.7rem;
+    color: #696969;
+}
+
+.content {
+    min-height: 30px;
+    max-height: 300px;;
+    padding: 5px;
+    overflow: scroll;
+}
