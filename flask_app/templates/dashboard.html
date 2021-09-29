@@ -112,9 +112,10 @@
         </div>
     </div>
 
-    
+
     <div class="home-content">
         <div class="text">
+            <div id="result"></div>
             <div class="error-msg">
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
@@ -160,7 +161,9 @@
 
                         <td>
                             <button class="btn-gray"><a href="/view/ticket/{{ticket.id}}">View</a></button> || 
+                            {% if session["admin_level"] %}
                             <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button> ||
+                            {% endif %}
                             <button class="btn-yellow"><a href="/edit/ticket/{{ticket.id}}">Comment</a></button>
                         </td>
                     </tr>

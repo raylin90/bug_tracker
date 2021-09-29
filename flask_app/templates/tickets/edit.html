@@ -90,7 +90,9 @@
                         </optgroup>
                     </select>
                 </div>
+                {% if session["admin_level"]  %}
                 <input type="submit" value="Update">
+                {% endif %}
             </form>
         </div>
 

@@ -95,6 +95,11 @@ def dashboard():
     user = User.get_user_by_id(data)
     # get all tickets from db
     all_tickets = Ticket.show_all_tickets()
+
+    # fetch data from database about admin level
+    one_admin = Admin.get_admins_by_user_id(data)
+    # set admin level into session, because we only one certain users in the setting page
+    session["admin_level"] = one_admin["level_identifier"]
     return render_template("dashboard.html", user = user, all_tickets = all_tickets)
 
 ######################################
@@ -159,13 +164,7 @@ def edit_user2():
 ######################################
 @app.route("/admins/setting")
 def admins_setup():
-    data = {
-        "id": session["user_id"],
-    }
-    # fetch data from database about admin level
-    one_admin = Admin.get_admins_by_user_id(data)
-    # set admin level into session, because we only one certain users in the setting page
-    session["admin_level"] = one_admin["level_identifier"]
+
     if not session["admin_level"] or session["admin_level"] < 8:
         flash("Setting Page Only Open to Admin User")
         return redirect("/dashboard")

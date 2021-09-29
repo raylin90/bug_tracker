@@ -54,6 +54,6 @@ class Admin:
     # delete admin info.
     ############################################
     @classmethod
-    def delete_admin(cls, data):
-        query = "DELETE FROM admins WHERE admins.user_id=%(id)s"
+    def deactivate_admin(cls, data):
+        query = "UPDATE admins SET level_identifier = %(lvl)s, branch=%(branch)s, job_title=%(title)s  WHERE admins.user_id=%(id)s"
         return connectToMySQL("bug_tracker").query_db(query, data)

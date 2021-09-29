@@ -1,7 +1,7 @@
 # import Flask from __init__.py file
 from flask_app import app
 # import render_template(view HTML), redirect(route to different URL), request(get data from HTML), session(store session value), flask(display flash message
-from flask import render_template,redirect,request,session, flash
+from flask import render_template,redirect,request,session, flash, jsonify
 from flask_app.models.ticket import Ticket
 from flask_app.models.admin import Admin
 from flask_app.models.user import User
@@ -114,14 +114,14 @@ def update_comment(id):
     Comment.save_comment(data)
     return redirect("/dashboard")
 
-# ######################################
-# # search ticket route
-# ######################################
-# @app.route("/ticketsearch")
-# def search():
-
-#     data = {
-#         "name" : request.args.get('searchbar'),  # get our data from the query string in the url
-#     }
-#     results = Ticket.search_ticket(data)
-#     return render_template("tickets/search.html", ticket = results) # render a template which uses the results
+######################################
+# search ticket route
+######################################
+@app.route("/ajaxlivesearch", methods=["POST", "GET"])
+def ajax_live_search():
+    print("****************************************************************************************************************************************************************************************************************************************************************************************************************")
+    if request.method == "POST":
+        search_word = request.form["query"]
+        print(search_word)
+        # serializes data to JSON format
+    return jsonify("success")

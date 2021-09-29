@@ -92,6 +92,9 @@ def delete_one_admins(id):
         return redirect("/dashboard")
     data = {
         "id": int(id),
+        "lvl": int(0),
+        "title": "null",
+        "branch": "null",
     }
-    Admin.delete_admin(data)
+    Admin.deactivate_admin(data)
     return redirect("/admins/setting")
