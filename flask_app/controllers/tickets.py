@@ -121,7 +121,15 @@ def update_comment(id):
 def ajax_live_search():
     print("****************************************************************************************************************************************************************************************************************************************************************************************************************")
     if request.method == "POST":
-        search_word = request.form["query"]
-        print(search_word)
-        # serializes data to JSON format
-    return jsonify("success")
+        # get search word from input
+
+        data = {
+            "search_word": request.form["query"]
+        }
+
+        # print(search_word)
+        tickets = Ticket.search_ticket(data)
+
+
+    # serializes data into JSON format
+    return jsonify(render_template("tickets/response.html", tickets = tickets))

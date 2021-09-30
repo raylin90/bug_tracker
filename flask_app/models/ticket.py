@@ -63,12 +63,12 @@ class Ticket:
         query = "UPDATE tickets SET title = %(title)s, description = %(description)s, urgency = %(urgency)s, est_due_date = %(est_due_date)s, status= %(status)s, assigned_to= %(assigned_to)s, updated_at= NOW() WHERE tickets.id=%(id)s;"
         return connectToMySQL("bug_tracker").query_db(query, data)
 
-# ######################################
-# # search ticket
-# ######################################
-#     @classmethod
-#     def search_ticket(cls, data):
-#         query = "SELECT * FROM tickets WHERE name LIKE %(name)s;"
-#         result = connectToMySQL("bug_tracker_schema").query_db(query, data)
-#         print("+++++++++++++++++++++++++++++++")
-#         return result
+######################################
+# search ticket
+######################################
+    @classmethod
+    def search_ticket(cls, data):
+        query = "SELECT * FROM tickets WHERE id LIKE %(search_word)s OR title LIKE %(search_word)s;"
+        result = connectToMySQL("bug_tracker").query_db(query, data)
+        print(result)
+        return result

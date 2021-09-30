@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>search result</title>
+</head>
+<body>
+    {% if tickets %}
+        <h4> {{tickets[0].count}} Record(s) Found</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Title</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in tickets %}
+                <tr>
+                    <td>{{t.id}}</td>
+                    <td>{{t.title}}</td>
+                    <td><a href="/view/ticket/{{t.id}}">View</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h4>0 record found</h4>
+    {% endif %}
+</body>
+</html>
