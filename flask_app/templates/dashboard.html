@@ -50,8 +50,8 @@
                 <span class="tooltip">Add Ticket</span>
             </li>
             <li>
-                <a href="#">
-                    <i class="fas fa-chart-pie"></i>
+                <a href="/analytics">
+                    <i id = "graph" class="fas fa-chart-pie"></i>
                     <span class="links-name">Analytics</span>
                 </a>
                 <span class="tooltip">Analytics</span>
@@ -62,20 +62,6 @@
                     <span class="links-name">File Manager</span>
                 </a>
                 <span class="tooltip">File</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="links-name">Order</span>
-                </a>
-                <span class="tooltip">Order</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-heart"></i>
-                    <span class="links-name">Saved</span>
-                </a>
-                <span class="tooltip">Saved</span>
             </li>
             <li>
                 <a href="/admins/setting">
@@ -128,16 +114,16 @@
             <h3>All Open Tickets: </h3>
             <br>
             <hr>
-            <table>
+            <table id="table-content">
                 <thead>
                     <tr>
-                        <th>Ticket No.</th>
-                        <th>Title</th>
-                        <th>Urgency</th>
-                        <th>Requestor</th>
-                        <th>Est. Due Date</th>
-                        <th>Status</th>
-                        <th>Timeline</th>
+                        <th class="sort" value="id">Ticket No.</th>
+                        <th class="sort" value="title">Title</th>
+                        <th class="sort" value="urgency">Urgency</th>
+                        <th class="sort" value="admin_id">Requestor</th>
+                        <th class="sort" value="est_due_date">Est. Due Date</th>
+                        <th class="sort" value="status">Status</th>
+                        <th class="sort" value="timeline">Timeline</th>
                         <th>Action</th>
                     </tr>
                 </thead>

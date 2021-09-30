@@ -119,17 +119,25 @@ def update_comment(id):
 ######################################
 @app.route("/ajaxlivesearch", methods=["POST", "GET"])
 def ajax_live_search():
-    print("****************************************************************************************************************************************************************************************************************************************************************************************************************")
     if request.method == "POST":
         # get search word from input
-
         data = {
             "search_word": request.form["query"]
         }
-
-        # print(search_word)
+        # print(data["search_word"])
         tickets = Ticket.search_ticket(data)
-
-
     # serializes data into JSON format
     return jsonify(render_template("tickets/response.html", tickets = tickets))
+
+@app.route("/livetablesort", methods=['GET', 'POST'])
+def sort_table():
+    data = {
+        "search": request.form['query'],
+    }
+    # show pre-filled information for user's easy refeerence
+    ticket = Ticket.sort_tickets(data)
+    return jsonify(render_template("tickets/table.html", tickets = ticket))
+
+@app.route("/analytics")
+def chart():
+    return jsonify([[1,2,3,4],[32.1,10.0,76.5]])

@@ -1,7 +1,7 @@
 # import mysqlconnection, so we can connecto SQL database
 from flask_app.config.mysqlconnection import connectToMySQL
 # import flask, so we can display flash message at HTML
-from flask import flash
+from flask import flash, session
 
 class Ticket:
     def __init__(self,data):   # match to db table columns
@@ -42,7 +42,7 @@ class Ticket:
     ######################################
     @classmethod
     def show_all_tickets(cls):
-        query = "SELECT tickets.id, title, description, urgency, DATE_FORMAT(est_due_date, '%m/%d/%Y') AS est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id;"
+        query = "SELECT tickets.id, title, description, urgency, DATE_FORMAT(est_due_date, '%m-%d-%Y') AS est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id;"
         results = connectToMySQL("bug_tracker").query_db(query)
         return results
 
@@ -70,5 +70,53 @@ class Ticket:
     def search_ticket(cls, data):
         query = "SELECT * FROM tickets WHERE id LIKE %(search_word)s OR title LIKE %(search_word)s;"
         result = connectToMySQL("bug_tracker").query_db(query, data)
-        print(result)
+        # print(result)
         return result
+
+    @classmethod
+    def sort_tickets(cls, data):
+        if "count" in session:
+            if session["count"] == 1:
+                session["count"] -= 1
+            else:
+                session["count"] += 1
+        else:
+            session["count"] = 0
+        print(session["count"])
+        if session["count"] == 1:
+            if data['search'] == "id":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY tickets.id DESC;"
+            elif data['search'] == "title":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY title DESC;"
+            elif data['search'] == "urgency":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY urgency DESC;"
+            elif data['search'] == "admin_id":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY admin_id DESC;"
+            elif data['search'] == "est_due_date":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY urgency DESC;"
+            elif data['search'] == "est_due_date":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY urgency DESC;"
+            elif data['search'] == "status":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY status DESC;"
+            elif data['search'] == "timeline":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY time_line DESC;"
+        else:
+            if data['search'] == "id":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY tickets.id ASC;"
+            elif data['search'] == "title":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY title ASC;"
+            elif data['search'] == "urgency":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY urgency ASC;"
+            elif data['search'] == "admin_id":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY admin_id ASC;"
+            elif data['search'] == "est_due_date":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY urgency ASC;"
+            elif data['search'] == "est_due_date":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY urgency ASC;"
+            elif data['search'] == "status":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY status ASC;"
+            elif data['search'] == "timeline":
+                query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id ORDER BY time_line ASC;"
+        tickets = connectToMySQL("bug_tracker").query_db(query, data)
+        print(tickets)
+        return tickets
