@@ -5,6 +5,19 @@ $(document).ready(function(){
         $(".sidebar").toggleClass('active');
     });
 
+    // hover effect
+    $("#search-icon").hover(function() {
+        $(this).css({"background-color": "#fff", "color": "#1d1b31"})
+    }, function() {
+        $(this).css({"background-color": "#11101d", "color": "#fff"})
+    })
+
+    $(".sidebar ul li a").hover(function() {
+        $(this).css({"background-color": "#fff", "color": "#11101d", "transition-duration": "0.3s"})
+    }, function() {
+        $(this).css({"background-color": "#11101d", "color": "#fff"})
+    })
+
     // search feature
     function load_data(input) {
         $.ajax({
@@ -30,12 +43,13 @@ $(document).ready(function(){
     // check which th was clicked
     $(".sort").click(function() {
         let str = $(this).attr("value");
-        $("#table-content").fadeToggle("slow", function() {
+        $("#table-content").fadeToggle("fast", function() {
             $("#table-content").slideDown();
         });
-        getSort(str)
+        setTimeout(getSort(str), 10000)
     });
 
+    // sorting the table
     const getSort = str => {
         // console.log(str)
         $.ajax({
@@ -50,27 +64,4 @@ $(document).ready(function(){
             }
         });
     }
-
-    // $("#graph").click(function() {
-    //     jQuery.get("/analytics", function(data) {
-    //         // console.log(data)
-    //         // let x = data[0]
-    //         // let y = data[1]
-    //         // console.log(x)
-    //         // console.log(y)
-    //         // for(let i = 0; i < x.length; i ++) {
-    //         //     console.log(x[i])
-    //         // }
-    //         var xy = JSON.parse(data);
-    //         console.log(xy)
-    //     })
-    // })
-
-    $("#graph").click(function() {
-        fetch('/analytics')
-            .then(response => response.json())
-            // pass the data and call showData function (to retrive individual pokemon)
-            .then(data => console.log(data))
-    })
 });
-

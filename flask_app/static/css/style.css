@@ -23,6 +23,7 @@ body {
     background-color: #11101d;
     padding: 6px 14px;
     transition: 0.5s;
+    z-index:99
 }
 
 .sidebar.active {
@@ -121,16 +122,10 @@ body {
 
 #search-icon {
     position: absolute;
-    /* z-index specifies the stack order of an element, 1 is on top, -1 is below*/
     z-index: 99;
     color: #fff;
     font-size: 22px;
     transition: 0.5;
-}
-
-#search-icon:hover {
-    background: #fff;
-    color: #1d1b31;
 }
 
 #search {
@@ -157,13 +152,6 @@ body {
     border-radius: 12px;
     /* sets how white space inside an element is handled. Ex: when word is too long, it wont wrap it, so position will be nicer ** naming is too long** */
     white-space: nowrap;
-}
-
-.sidebar ul li a:hover {
-    color: #11101d;
-    background-color: #fff;
-    /* effect of show long it will take to transition */
-    transition-duration: 0.5s;
 }
 
 .sidebar ul li i {
@@ -272,7 +260,7 @@ body {
     width: calc(100% - 78px);
     left: 78px;
     transition: 0.5s;
-    /* z-index: -1; */
+    z-index: 1;
 }
 
 .home-content .text {

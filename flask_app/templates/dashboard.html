@@ -7,6 +7,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css') }}">
+    <link rel="short cut icon" type="image/png" href="../static/images/favicon.png">
     <script src="../static/js/script.js" defer></script>
     <!-- Font Awesome CDN Link  -->
     <script src="https://kit.fontawesome.com/37127f916b.js" crossorigin="anonymous"></script>
@@ -114,7 +115,7 @@
             <h3>All Open Tickets: </h3>
             <br>
             <hr>
-            <table id="table-content">
+            <table>
                 <thead>
                     <tr>
                         <th class="sort" value="id">Ticket No.</th>
@@ -127,7 +128,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-content">
                     {% for ticket in all_tickets%}
                     <tr>
                         <td>{{ticket.id}}</td>

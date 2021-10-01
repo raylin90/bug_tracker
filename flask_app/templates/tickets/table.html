@@ -1,54 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>search result</title>
-    <script src="../static/js/script.js" defer></script>
-</head>
-<body>
-    <table id="table-content">
-        <thead>
-            <tr>
-                <th class="sort" value="id">Ticket No.</th>
-                <th class="sort" value="title">Title</th>
-                <th class="sort" value="urgency">Urgency</th>
-                <th class="sort" value="admin_id">Requestor</th>
-                <th class="sort" value="est_due_date">Est. Due Date</th>
-                <th class="sort" value="status">Status</th>
-                <th class="sort" value="timeline">Timeline</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ticket in tickets%}
-            <tr>
-                <td>{{ticket.id}}</td>
-                <td class = "ticket-title">{{ticket.title}}</td>
-                <td>{{ticket.urgency}}</td>
-                <td>{{ticket.first_name}}</td>
-                <td>{{ticket.est_due_date.strftime('%Y-%m-%d')}}</td>
-                <td>{{ticket.status}}</td>
-                <!-- apply color styling for due date approching -->
-                {% if ticket.time_line < 0: %}
-                <td class="error-msg">{{ticket.time_line}}</td>
-                {% elif ticket.time_line < 3 %}
-                <td class="danger-msg">{{ticket.time_line}}</td>
-                {% else: %}
-                <td>{{ticket.time_line}}</td>
-                {% endif %}
+{% for ticket in tickets%}
+<tr>
+    <td>{{ticket.id}}</td>
+    <td class = "ticket-title">{{ticket.title}}</td>
+    <td>{{ticket.urgency}}</td>
+    <td>{{ticket.first_name}}</td>
+    <td>{{ticket.est_due_date.strftime('%Y-%m-%d')}}</td>
+    <td>{{ticket.status}}</td>
+    <!-- apply color styling for due date approching -->
+    {% if ticket.time_line < 0: %}
+    <td class="error-msg">{{ticket.time_line}}</td>
+    {% elif ticket.time_line < 3 %}
+    <td class="danger-msg">{{ticket.time_line}}</td>
+    {% else: %}
+    <td>{{ticket.time_line}}</td>
+    {% endif %}
 
-                <td>
-                    <button class="btn-gray"><a href="/view/ticket/{{ticket.id}}">View</a></button> || 
-                    {% if session["admin_level"] %}
-                    <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button> ||
-                    {% endif %}
-                    <button class="btn-yellow"><a href="/edit/ticket/{{ticket.id}}">Comment</a></button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+    <td>
+        <button class="btn-gray"><a href="/view/ticket/{{ticket.id}}">View</a></button> || 
+        {% if session["admin_level"] %}
+        <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button> ||
+        {% endif %}
+        <button class="btn-yellow"><a href="/edit/ticket/{{ticket.id}}">Comment</a></button>
+    </td>
+</tr>
+{% endfor %}
