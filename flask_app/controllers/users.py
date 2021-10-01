@@ -86,7 +86,7 @@ def login_user():
 def dashboard():
     # if user is not login, redirect them to login page
     if "user_id" not in session:
-        flash("Please login before processing to Dashboard")
+        flash("Please login first before processing further")
         return redirect("/login")
     
     # get the user info when they login by using their session id
@@ -166,7 +166,7 @@ def edit_user2():
 @app.route("/admins/setting")
 def admins_setup():
 
-    if not session["admin_level"] or session["admin_level"] < 8:
+    if "admin_level" not in session or not session["admin_level"] or session["admin_level"] < 8:
         flash("Setting Page Only Open to Admin User")
         return redirect("/dashboard")
     # use left join to get all users with their admins info.

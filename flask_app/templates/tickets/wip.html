@@ -119,19 +119,21 @@
                         {% endif %}
                     {% endwith %}
                 </div>
-            <h3>All Open Tickets: </h3>
+
+            {% if all_tickets%}
+            <h3>Your WIP List: </h3>
             <br>
             <hr>
             <table>
                 <thead>
                     <tr>
-                        <th class="sort" value="id">Ticket No.</th>
-                        <th class="sort" value="title">Title</th>
-                        <th class="sort" value="urgency">Urgency</th>
-                        <th class="sort" value="admin_id">Requestor</th>
-                        <th class="sort" value="est_due_date">Est. Due Date</th>
-                        <th class="sort" value="status">Status</th>
-                        <th class="sort" value="timeline">Timeline</th>
+                        <th>Ticket No.</th>
+                        <th>Title</th>
+                        <th>Urgency</th>
+                        <th>Requestor</th>
+                        <th>Est. Due Date</th>
+                        <th>Status</th>
+                        <th>Timeline</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -164,6 +166,11 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% else %}
+            <h3>No Record</h3>
+            <br>
+            <hr>
+            {% endif %}
         </div>
     </div>
 </body>

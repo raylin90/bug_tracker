@@ -98,7 +98,9 @@ class Ticket:
         results = connectToMySQL("bug_tracker").query_db(query, data)
         return results
 
-
+    ######################################
+    # sort tickets by it's type (col)
+    ######################################
     @classmethod
     def sort_tickets(cls, data):
         if "count" in session:
