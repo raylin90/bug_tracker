@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View a Ticket</title>
+    <title>WIP</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css') }}">
     <link rel="short cut icon" type="image/png" href="../static/images/favicon.png">
     <script src="../static/js/script.js" defer></script>
     <!-- Font Awesome CDN Link  -->
@@ -37,11 +37,11 @@
                 <span class="tooltip">Dashboard</span>
             </li>
             <li>
-                <a href="/edit/user/{{ user.id }}">
-                    <i class="fas fa-user"></i>
-                    <span class="links-name">User</span>
+                <a href="/workinglist">
+                    <i class="fas fa-heart"></i>
+                    <span class="links-name">Working List</span>
                 </a>
-                <span class="tooltip">User</span>
+                <span class="tooltip">Working List</span>
             </li>
             <li>
                 <a href="/create_ticket">
@@ -51,6 +51,13 @@
                 <span class="tooltip">Add Ticket</span>
             </li>
             <li>
+                <a href="/tickets/status">
+                    <i class="fas fa-folder"></i>
+                    <span class="links-name">Tickets Status</span>
+                </a>
+                <span class="tooltip">Tickets Status</span>
+            </li>
+            <li>
                 <a href="/analytics">
                     <i id = "graph" class="fas fa-chart-pie"></i>
                     <span class="links-name">Analytics</span>
@@ -58,11 +65,11 @@
                 <span class="tooltip">Analytics</span>
             </li>
             <li>
-                <a href="/tickets/status">
-                    <i class="fas fa-folder"></i>
-                    <span class="links-name">Tickets Status</span>
+                <a href="/edit/user/{{ user.id }}">
+                    <i class="fas fa-user"></i>
+                    <span class="links-name">User</span>
                 </a>
-                <span class="tooltip">Tickets Status</span>
+                <span class="tooltip">User</span>
             </li>
             <li>
                 <a href="/admins/setting">
@@ -99,67 +106,64 @@
         </div>
     </div>
 
+
     <div class="home-content">
         <div class="text">
-            <h1>Ticket No. {{ ticket.id}}</h1>
-    
-            <form>
-                <div class="form-item">
-                    <label for="title">Title:</label>
-                    <input type="text" name="title" value={{ ticket.title }} disabled>
+            <div id="result"></div>
+                <div class="error-msg">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class="text-danger">{{message}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                 </div>
-                <div class="form-item">
-                    <label for="description">Description:</label>
-                    <textarea name="description" cols="30" rows="10" disabled>{{ ticket.description }}</textarea>
-                </div>
-                <div class="form-item">
-                    <label for="urgency">Urgency:</label>
-                    <select name="urgency" disabled>
-                        <option value={{ ticket.urgency }}>{{ ticket.urgency }}</option>
-                        <optgroup label="choose from below:">
-                            <option value="None">None</option>
-                            <option value="Mild">Mild</option>
-                            <option value="Moderate">Moderate</option>
-                            <option value="Severe">Severe</option>
-                            <option value="URGENT">URGENT</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="form-item">
-                    <label for="est_due_date">Est. Due Date:</label>
-                    <input type="date" name="est_due_date" value={{ticket.est_due_date}} disabled>
-                </div>
-                <div class="form-item">
-                    <label for="status">Status:</label>
-                    <select name="status" disabled>
-                        <option value={{ ticket.status }}>{{ ticket.status }}</option>
-                        <optgroup label="Stage:">
-                            <option value="Open">Open</option>
-                            <option value="Approved">Approved</option> 
-                            <option value="Assigned">Assigned</option>
-                            <option value="WIP">WIP</option>
-                            <option value="Trouble Shooting">Trouble Shooting</option>
-                            <option value="Review">Review</option>
-                            <option value="Closed">Closed</option>
-                            <option value="On Hold">On Hold</option>
-                            <option value="Stuck">Stuck</option>
-                            <option value="Cancelled">Cancelled</option>
-                    </select>
-                </div>
-                <div class="form-item">
-                    <label for="created_at">Ticket created_at:</label>
-                    <input type="date" name="created_at" value={{ticket.created_at}} disabled>
-                </div>
-                <div class="form-item">
-                    <label for="branch">Ticket branch:</label>
-                    <input type="text" name="branch" value={{ticket.branch}} disabled>
-                </div>
-                <div class="form-item">
-                    <label for="first_name">Ticket Requestor:</label>
-                    <input type="text" name="first_name" value={{ticket.first_name}} disabled>
-                </div>
-            </form>
-            <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button>
+            <h3>All Open Tickets: </h3>
+            <br>
+            <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sort" value="id">Ticket No.</th>
+                        <th class="sort" value="title">Title</th>
+                        <th class="sort" value="urgency">Urgency</th>
+                        <th class="sort" value="admin_id">Requestor</th>
+                        <th class="sort" value="est_due_date">Est. Due Date</th>
+                        <th class="sort" value="status">Status</th>
+                        <th class="sort" value="timeline">Timeline</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-content">
+                    {% for ticket in all_tickets%}
+                    <tr>
+                        <td>{{ticket.id}}</td>
+                        <td class = "ticket-title">{{ticket.title}}</td>
+                        <td>{{ticket.urgency}}</td>
+                        <td>{{ticket.first_name}}</td>
+                        <td>{{ticket.est_due_date.strftime('%Y-%m-%d')}}</td>
+                        <td>{{ticket.status}}</td>
+                        <!-- apply color styling for due date approching -->
+                        {% if ticket.time_line < 0: %}
+                        <td class="error-msg">{{ticket.time_line}}</td>
+                        {% elif ticket.time_line < 3 %}
+                        <td class="danger-msg">{{ticket.time_line}}</td>
+                        {% else: %}
+                        <td>{{ticket.time_line}}</td>
+                        {% endif %}
+
+                        <td>
+                            <button class="btn-gray"><a href="/view/ticket/{{ticket.id}}">View</a></button> || 
+                            {% if session["admin_level"] %}
+                            <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button> ||
+                            {% endif %}
+                            <button class="btn-yellow"><a href="/edit/ticket/{{ticket.id}}">Comment</a></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

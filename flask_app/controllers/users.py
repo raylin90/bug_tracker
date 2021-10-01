@@ -14,7 +14,8 @@ bcrypt = Bcrypt(app)
 ######################################
 @app.route("/")
 def home():
-    return render_template("index.html")
+    all_tickets = Ticket.show_all_tickets()
+    return render_template("index.html", all_tickets = all_tickets)
 
 ######################################
 # register route

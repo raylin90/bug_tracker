@@ -12,6 +12,15 @@ from flask_app.models.comment import Comment
 ######################################
 @app.route("/create_ticket")
 def create_ticket():
+    # if user is not login, redirect them to login page
+    if "user_id" not in session:
+        flash("Please login before create a ticket")
+        return redirect("/login")
+
+    data = {
+        "id": session["user_id"]
+    }
+    user = User.get_user_by_id(data)
     # get the admin info. by using their session id, we want to limit the create access to certain users only
     data = {
         "id": session["user_id"]
@@ -25,7 +34,7 @@ def create_ticket():
     session["admin_level"] = one_admin[0]["level_identifier"]
     session["admin_id"] = one_admin[0]["id"]
     # print(session["admin_id"])
-    return render_template ("/tickets/create.html")
+    return render_template ("/tickets/create.html", user = user)
 
 @app.route("/save_ticket", methods=["POST"])
 def save_ticket():
@@ -50,19 +59,37 @@ def save_ticket():
 ######################################
 @app.route("/view/ticket/<id>")
 def view_ticket(id):
+    # if user is not login, redirect them to login page
+    if "user_id" not in session:
+        flash("Please login before processing to Dashboard")
+        return redirect("/login")
+
+    data = {
+        "id": session["user_id"]
+    }
+    user = User.get_user_by_id(data)
     data = {
         "id" : int(id),
     }
     # show pre-filled information for user's easy refeerence
     ticket = Ticket.show_one_ticket(data)
     print(ticket)
-    return render_template("tickets/view.html", ticket = ticket)
+    return render_template("tickets/view.html", ticket = ticket, user = user)
 
 ######################################
 # edit & update ticket route
 ######################################
 @app.route("/edit/ticket/<id>")
 def edit_ticket(id):
+    # if user is not login, redirect them to login page
+    if "user_id" not in session:
+        flash("Please login before processing to Dashboard")
+        return redirect("/login")
+
+    data = {
+        "id": session["user_id"]
+    }
+    user = User.get_user_by_id(data)
     data = {
         "id" : int(id),
     }
@@ -79,7 +106,7 @@ def edit_ticket(id):
     assigned_to_user = User.get_user_by_id(data)
     print("22222222")
     print(assigned_to_user)
-    return render_template("tickets/edit.html", ticket = ticket, users = users, assigned_to_user = assigned_to_user, comments = comments)
+    return render_template("tickets/edit.html", ticket = ticket, users = users, assigned_to_user = assigned_to_user, comments = comments, user = user)
 
 @app.route("/update/ticket/<id>", methods=["POST"])
 def update_ticket(id):
@@ -143,6 +170,11 @@ def sort_table():
 ######################################
 @app.route("/analytics")
 def chart():
+    # if user is not login, redirect them to login page
+    if "user_id" not in session:
+        flash("Please login before viewing this page")
+        return redirect("/login")
+
     # pending function, need to figuare out how to pass data from python to JS
     # using chart.js
     data = {
@@ -156,8 +188,10 @@ def chart():
 ######################################
 @app.route("/tickets/status")
 def show_table_by_category():
-    # pending function, need to figuare out how to pass data from python to JS
-    # using chart.js
+    # if user is not login, redirect them to login page
+    if "user_id" not in session:
+        flash("Please login before viewing this page")
+        return redirect("/login")
     data = {
         "id": session["user_id"]
     }
@@ -173,3 +207,17 @@ def process_category():
     tickets = Ticket.search_by_status(data)
     count = Ticket.count_by_status(data)
     return jsonify(render_template("tickets/full-table.html", all_tickets = tickets, count = count[0]))
+
+
+@app.route("/workinglist")
+def working_list():
+    # if user is not login, redirect them to login page
+    if "user_id" not in session:
+        flash("Please login before viewing this page")
+        return redirect("/login")
+    data = {
+        "id": session["user_id"]
+    }
+    user = User.get_user_by_id(data)
+    all_tickets = Ticket.show_all_tickets_by_user(data)
+    return render_template("tickets/wip.html", user = user, all_tickets = all_tickets)

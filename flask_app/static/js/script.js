@@ -5,6 +5,10 @@ $(document).ready(function(){
         $(".sidebar").toggleClass('active');
     });
 
+    $("#search-icon").click(function() {
+        $(".sidebar").toggleClass('active');
+    });
+
     // hover effect
     $("#search-icon").hover(function() {
         $(this).css({"background-color": "#fff", "color": "#1d1b31"})

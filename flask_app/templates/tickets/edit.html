@@ -8,119 +8,211 @@
     <link rel="short cut icon" type="image/png" href="../static/images/favicon.png">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form3.css') }}">
+    <script src="../static/js/script.js" defer></script>
+    <!-- Font Awesome CDN Link  -->
+    <script src="https://kit.fontawesome.com/37127f916b.js" crossorigin="anonymous"></script>
+    <!-- jQuery CDN Link -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <div class="error-msg">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <p class="text-danger">{{message}}</p>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </div>
-    <div class="text">
-
-
-    
-        <div class="left">
-            <h1>Edit Ticket No. {{ ticket.id}}</h1>
-            <form action="/update/ticket/{{ticket.id}}" method="post">
-                <div class="form-item">
-                    <label for="title">Title:</label>
-                    <input type="text" name="title" value={{ ticket.title }}>
-                </div>
-                <div class="form-item">
-                    <label for="description">Description:</label>
-                    <textarea name="description" cols="30" rows="10">{{ ticket.description }}</textarea>
-                </div>
-                <div class="form-item">
-                    <label for="urgency">Urgency:</label>
-                    <select name="urgency">
-                        <option value={{ ticket.urgency }}>{{ ticket.urgency }}</option>
-                        <optgroup label="choose from below:">
-                            <option value="None">None</option>
-                            <option value="Mild">Mild</option>
-                            <option value="Moderate">Moderate</option>
-                            <option value="Severe">Severe</option>
-                            <option value="URGENT">URGENT</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="form-item">
-                    <label for="est_due_date">Est. Due Date:</label>
-                    <input type="date" name="est_due_date" value={{ticket.est_due_date}}>
-                </div>
-                <div class="form-item">
-                    <label for="status">Status:</label>
-                    <select name="status">
-                        <option value={{ ticket.status }}>{{ ticket.status }}</option>
-                        <optgroup label="Stage:">
-                            <option value="Open">Open</option>
-                            <option value="Approved">Approved</option> 
-                            <option value="Assigned">Assigned</option>
-                            <option value="WIP">WIP</option>
-                            <option value="Trouble Shooting">Trouble Shooting</option>
-                            <option value="Review">Review</option>
-                            <option value="Closed">Closed</option>
-                            <option value="On Hold">On Hold</option>
-                            <option value="Stuck">Stuck</option>
-                            <option value="Cancelled">Cancelled</option>
-                    </select>
-                </div>
-                <div class="form-item">
-                    <label for="created_at">Ticket created_at:</label>
-                    <input type="date" name="created_at" value={{ticket.created_at}} disabled>
-                </div>
-                <div class="form-item">
-                    <label for="branch">Ticket branch:</label>
-                    <input type="text" name="branch" value={{ticket.branch}} disabled>
-                </div>
-                <div class="form-item">
-                    <label for="first_name">Ticket Requestor:</label>
-                    <input type="text" name="first_name" value={{ticket.first_name}} disabled>
-                </div>
-                <div class="form-item">
-                    <label for="assigned_to">Ticket Assigned To:</label>
-                    <select name="assigned_to">
-                        <option value={{assigned_to_user.id}}>{{assigned_to_user.first_name}}</option>
-                        <optgroup label="assign to">
-                            {% for user in users %}
-                            <option value={{ user.id }}>{{ user.first_name }}</option>
-                            {% endfor %}
-                        </optgroup>
-                    </select>
-                </div>
-                {% if session["admin_level"]  %}
-                <input type="submit" value="Update">
-                {% endif %}
-            </form>
-        </div>
-
-        <div class="right">
-            <h1>Comments:</h1>
-            <br>
-            {% for comment in comments %}
-            <div class="card">
-                <div class="title">
-                    <img src="{{ url_for('static', filename='images/avatar.png') }}" alt="">
-                    <div class="info">
-                        <p>{{ comment.first_name}}</p>
-                        <p>{{ comment.created_at}}</p>
-                    </div>
-                </div>
-                <p class="content">{{ comment.text }} </p>
+    <div class="sidebar">
+        <div class="logo-content">
+            <div class="logo">
+                <i class="fas fa-virus-slash"></i>
+                <div class="logo-name">BugTracker</div>
             </div>
-            {% endfor %}
-
-            <form action="/update/comment/{{ticket.id}}" method="post">
-                <div class="form-item">
-                    <label for="comment">Leave your comment:</label>
-                    <textarea name="text" cols="30" rows="6"></textarea>
-                </div>
-                <input type="submit" value="Post">
-            </form>
+            <i class="fas fa-bars" id="btn"></i>
         </div>
+        <ul class="nav-list">
+            <li>
+                <i class="fas fa-search" id="search-icon"></i>
+                <input type="text" name="search" placeholder="Search..." id="search">
+                <span class="tooltip">Search</span>
+            </li>
+            <li>
+                <a href="/dashboard">
+                    <i class="fas fa-th-large"></i>
+                    <span class="links-name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="/edit/user/{{ user.id }}">
+                    <i class="fas fa-user"></i>
+                    <span class="links-name">User</span>
+                </a>
+                <span class="tooltip">User</span>
+            </li>
+            <li>
+                <a href="/create_ticket">
+                    <i class="fas fa-plus"></i>
+                    <span class="links-name">Add Ticket</span>
+                </a>
+                <span class="tooltip">Add Ticket</span>
+            </li>
+            <li>
+                <a href="/analytics">
+                    <i id = "graph" class="fas fa-chart-pie"></i>
+                    <span class="links-name">Analytics</span>
+                </a>
+                <span class="tooltip">Analytics</span>
+            </li>
+            <li>
+                <a href="/tickets/status">
+                    <i class="fas fa-folder"></i>
+                    <span class="links-name">Tickets Status</span>
+                </a>
+                <span class="tooltip">Tickets Status</span>
+            </li>
+            <li>
+                <a href="/admins/setting">
+                    <i class="fas fa-cog"></i>
+                    <span class="links-name">Setting</span>
+                </a>
+                <span class="tooltip">Setting</span>
+            </li>
+        </ul>
+        <div class="profile-content">
+            {% if "user_id" not in session: %}
+                <div class="profile">
+                    <div class="profile-details">
+                        <img src="../static/images/avatar.png" alt="avatar">
+                        <div class="name-job">
+                            <div class="name"><a href="/login">Login</a></div>
+                            <div class="job"><a href="/register">Register</a></div>
+                        </div>
+                    </div>
+                    <a href="/login"><i class="fas fa-sign-in-alt" id="logout"></i></a>
+                </div>
+                {% else: %}
+                <div class="profile">
+                    <div class="profile-details">
+                        <img src="../static/images/avatar.png" alt="avatar">
+                        <div class="name-job">
+                            <div class="name">{{ user.first_name }} {{ user.last_name }}</div>
+                            <div class="job">{{ user.job_title }}</div>
+                        </div>
+                    </div>
+                    <a href="/logout"><i class="fas fa-sign-out-alt" id="logout"></i></a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <div class="home-content">
+        <div class="text">
+            <div class="error-msg">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="text-danger">{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <div class="left">
+                <h1>Edit Ticket No. {{ ticket.id}}</h1>
+                <form action="/update/ticket/{{ticket.id}}" method="post">
+                    <div class="form-item">
+                        <label for="title">Title:</label>
+                        <input type="text" name="title" value={{ ticket.title }}>
+                    </div>
+                    <div class="form-item">
+                        <label for="description">Description:</label>
+                        <textarea name="description" cols="30" rows="10">{{ ticket.description }}</textarea>
+                    </div>
+                    <div class="form-item">
+                        <label for="urgency">Urgency:</label>
+                        <select name="urgency">
+                            <option value={{ ticket.urgency }}>{{ ticket.urgency }}</option>
+                            <optgroup label="choose from below:">
+                                <option value="None">None</option>
+                                <option value="Mild">Mild</option>
+                                <option value="Moderate">Moderate</option>
+                                <option value="Severe">Severe</option>
+                                <option value="URGENT">URGENT</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-item">
+                        <label for="est_due_date">Est. Due Date:</label>
+                        <input type="date" name="est_due_date" value={{ticket.est_due_date}}>
+                    </div>
+                    <div class="form-item">
+                        <label for="status">Status:</label>
+                        <select name="status">
+                            <option value={{ ticket.status }}>{{ ticket.status }}</option>
+                            <optgroup label="Stage:">
+                                <option value="Open">Open</option>
+                                <option value="Approved">Approved</option> 
+                                <option value="Assigned">Assigned</option>
+                                <option value="WIP">WIP</option>
+                                <option value="Trouble Shooting">Trouble Shooting</option>
+                                <option value="Review">Review</option>
+                                <option value="Closed">Closed</option>
+                                <option value="On Hold">On Hold</option>
+                                <option value="Stuck">Stuck</option>
+                                <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="form-item">
+                        <label for="created_at">Ticket created_at:</label>
+                        <input type="date" name="created_at" value={{ticket.created_at}} disabled>
+                    </div>
+                    <div class="form-item">
+                        <label for="branch">Ticket branch:</label>
+                        <input type="text" name="branch" value={{ticket.branch}} disabled>
+                    </div>
+                    <div class="form-item">
+                        <label for="first_name">Ticket Requestor:</label>
+                        <input type="text" name="first_name" value={{ticket.first_name}} disabled>
+                    </div>
+                    <div class="form-item">
+                        <label for="assigned_to">Ticket Assigned To:</label>
+                        <select name="assigned_to">
+                            <option value={{assigned_to_user.id}}>{{assigned_to_user.first_name}}</option>
+                            <optgroup label="assign to">
+                                {% for user in users %}
+                                <option value={{ user.id }}>{{ user.first_name }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        </select>
+                    </div>
+                    {% if session["admin_level"]  %}
+                    <input type="submit" value="Update">
+                    {% endif %}
+                </form>
+            </div>
+    
+            <div class="right">
+                <h1>Comments:</h1>
+                <br>
+                {% for comment in comments %}
+                <div class="card">
+                    <div class="title">
+                        <img src="{{ url_for('static', filename='images/avatar.png') }}" alt="">
+                        <div class="info">
+                            <p>{{ comment.first_name}}</p>
+                            <p>{{ comment.created_at}}</p>
+                        </div>
+                    </div>
+                    <p class="content">{{ comment.text }} </p>
+                </div>
+                {% endfor %}
+    
+                <form action="/update/comment/{{ticket.id}}" method="post">
+                    <div class="form-item">
+                        <label for="comment">Leave your comment:</label>
+                        <textarea name="text" cols="30" rows="6"></textarea>
+                    </div>
+                    <input type="submit" value="Post">
+                </form>
+            </div>
+
+    </div>
+
     </div>
 </body>
 </html>

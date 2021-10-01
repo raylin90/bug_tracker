@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css') }}">
     <link rel="short cut icon" type="image/png" href="../static/images/favicon.png">
     <script src="../static/js/script.js" defer></script>
     <!-- Font Awesome CDN Link  -->
@@ -37,45 +38,38 @@
             </li>
             <li>
                 <a href="#">
-                    <i class="fas fa-user"></i>
-                    <span class="links-name">User</span>
+                    <i class="fas fa-heart"></i>
+                    <span class="links-name">Working List</span>
                 </a>
-                <span class="tooltip">User</span>
+                <span class="tooltip">Working List</span>
             </li>
             <li>
-                <a href="#">
+                <a href="/create_ticket">
                     <i class="fas fa-plus"></i>
                     <span class="links-name">Add Ticket</span>
                 </a>
                 <span class="tooltip">Add Ticket</span>
             </li>
             <li>
-                <a href="#">
+                <a href="/tickets/status">
+                    <i class="fas fa-folder"></i>
+                    <span class="links-name">Tickets Status</span>
+                </a>
+                <span class="tooltip">Tickets Status</span>
+            </li>
+            <li>
+                <a href="/analytics">
                     <i class="fas fa-chart-pie"></i>
                     <span class="links-name">Analytics</span>
                 </a>
                 <span class="tooltip">Analytics</span>
             </li>
             <li>
-                <a href="#">
-                    <i class="fas fa-folder"></i>
-                    <span class="links-name">File Manager</span>
+                <a href="/edit/user">
+                    <i class="fas fa-user"></i>
+                    <span class="links-name">User</span>
                 </a>
-                <span class="tooltip">File</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="links-name">Order</span>
-                </a>
-                <span class="tooltip">Order</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fas fa-heart"></i>
-                    <span class="links-name">Saved</span>
-                </a>
-                <span class="tooltip">Saved</span>
+                <span class="tooltip">User</span>
             </li>
             <li>
                 <a href="/admins/setting">
@@ -100,10 +94,63 @@
         </div>
     </div>
 
-    
     <div class="home-content">
         <div class="text">
+            <div id="result"></div>
+                <div class="error-msg">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class="text-danger">{{message}}</p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            <h3>All Open Tickets: </h3>
+            <br>
+            <hr>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sort" value="id">Ticket No.</th>
+                        <th class="sort" value="title">Title</th>
+                        <th class="sort" value="urgency">Urgency</th>
+                        <th class="sort" value="admin_id">Requestor</th>
+                        <th class="sort" value="est_due_date">Est. Due Date</th>
+                        <th class="sort" value="status">Status</th>
+                        <th class="sort" value="timeline">Timeline</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-content">
+                    {% for ticket in all_tickets%}
+                    <tr>
+                        <td>{{ticket.id}}</td>
+                        <td class = "ticket-title">{{ticket.title}}</td>
+                        <td>{{ticket.urgency}}</td>
+                        <td>{{ticket.first_name}}</td>
+                        <td>{{ticket.est_due_date}}</td>
+                        <td>{{ticket.status}}</td>
+                        <!-- apply color styling for due date approching -->
+                        {% if ticket.time_line < 0: %}
+                        <td class="error-msg">{{ticket.time_line}}</td>
+                        {% elif ticket.time_line < 3 %}
+                        <td class="danger-msg">{{ticket.time_line}}</td>
+                        {% else: %}
+                        <td>{{ticket.time_line}}</td>
+                        {% endif %}
 
+                        <td>
+                            <button class="btn-gray"><a href="/view/ticket/{{ticket.id}}">View</a></button> || 
+                            {% if session["admin_level"] %}
+                            <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button> ||
+                            {% endif %}
+                            <button class="btn-yellow"><a href="/edit/ticket/{{ticket.id}}">Comment</a></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

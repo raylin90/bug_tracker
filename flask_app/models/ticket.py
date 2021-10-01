@@ -89,6 +89,16 @@ class Ticket:
         # print(result)
         return result
 
+    ######################################
+    # show ALL tickets belongs to login user
+    ######################################
+    @classmethod
+    def show_all_tickets_by_user(cls, data):
+        query = "SELECT tickets.id, title, description, urgency, est_due_date, DATEDIFF(est_due_date, NOW()) AS time_line, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id WHERE status !='Closed' AND assigned_to = %(id)s;"
+        results = connectToMySQL("bug_tracker").query_db(query, data)
+        return results
+
+
     @classmethod
     def sort_tickets(cls, data):
         if "count" in session:
