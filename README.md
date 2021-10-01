@@ -1,3 +1,1 @@
-# bug_tracker
-# bug_tracker
-# bug_tracker
+![ERD](/images/avatar.png)
