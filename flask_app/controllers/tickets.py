@@ -138,6 +138,38 @@ def sort_table():
     ticket = Ticket.sort_tickets(data)
     return jsonify(render_template("tickets/table.html", tickets = ticket))
 
+######################################
+# Analytics route (will show graph)
+######################################
 @app.route("/analytics")
 def chart():
-    return jsonify([[1,2,3,4],[32.1,10.0,76.5]])
+    # pending function, need to figuare out how to pass data from python to JS
+    # using chart.js
+    data = {
+        "id": session["user_id"]
+    }
+    user = User.get_user_by_id(data)
+    return render_template("tickets/chart.html", user = user)
+
+######################################
+# Category route (will show each ticket status)
+######################################
+@app.route("/tickets/status")
+def show_table_by_category():
+    # pending function, need to figuare out how to pass data from python to JS
+    # using chart.js
+    data = {
+        "id": session["user_id"]
+    }
+    user = User.get_user_by_id(data)
+    return render_template("tickets/category.html", user = user)
+
+@app.route("/searchstatus", methods = ["POST"])
+def process_category():
+    data = {
+        "search": request.form["query"]
+    }
+    print(request.form["query"])
+    tickets = Ticket.search_by_status(data)
+    count = Ticket.count_by_status(data)
+    return jsonify(render_template("tickets/full-table.html", all_tickets = tickets, count = count[0]))

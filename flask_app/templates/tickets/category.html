@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form2.css') }}">
+    <link rel="short cut icon" type="image/png" href="../static/images/favicon.png">
+    <script src="../static/js/script.js" defer></script>
+    <!-- Font Awesome CDN Link  -->
+    <script src="https://kit.fontawesome.com/37127f916b.js" crossorigin="anonymous"></script>
+    <!-- jQuery CDN Link -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <body>
+        <div class="sidebar">
+            <div class="logo-content">
+                <div class="logo">
+                    <i class="fas fa-virus-slash"></i>
+                    <div class="logo-name">BugTracker</div>
+                </div>
+                <i class="fas fa-bars" id="btn"></i>
+            </div>
+            <ul class="nav-list">
+                <li>
+                    <i class="fas fa-search" id="search-icon"></i>
+                    <input type="text" name="search" placeholder="Search..." id="search">
+                    <span class="tooltip">Search</span>
+                </li>
+                <li>
+                    <a href="/dashboard">
+                        <i class="fas fa-th-large"></i>
+                        <span class="links-name">Dashboard</span>
+                    </a>
+                    <span class="tooltip">Dashboard</span>
+                </li>
+                <li>
+                    <a href="/edit/user/{{ user.id }}">
+                        <i class="fas fa-user"></i>
+                        <span class="links-name">User</span>
+                    </a>
+                    <span class="tooltip">User</span>
+                </li>
+                <li>
+                    <a href="/create_ticket">
+                        <i class="fas fa-plus"></i>
+                        <span class="links-name">Add Ticket</span>
+                    </a>
+                    <span class="tooltip">Add Ticket</span>
+                </li>
+                <li>
+                    <a href="/analytics">
+                        <i id = "graph" class="fas fa-chart-pie"></i>
+                        <span class="links-name">Analytics</span>
+                    </a>
+                    <span class="tooltip">Analytics</span>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-folder"></i>
+                        <span class="links-name">Category</span>
+                    </a>
+                    <span class="tooltip">Category</span>
+                </li>
+                <li>
+                    <a href="/admins/setting">
+                        <i class="fas fa-cog"></i>
+                        <span class="links-name">Setting</span>
+                    </a>
+                    <span class="tooltip">Setting</span>
+                </li>
+            </ul>
+            <div class="profile-content">
+                {% if "user_id" not in session: %}
+                    <div class="profile">
+                        <div class="profile-details">
+                            <img src="../static/images/avatar.png" alt="avatar">
+                            <div class="name-job">
+                                <div class="name"><a href="/login">Login</a></div>
+                                <div class="job"><a href="/register">Register</a></div>
+                            </div>
+                        </div>
+                        <a href="/login"><i class="fas fa-sign-in-alt" id="logout"></i></a>
+                    </div>
+                    {% else: %}
+                    <div class="profile">
+                        <div class="profile-details">
+                            <img src="../static/images/avatar.png" alt="avatar">
+                            <div class="name-job">
+                                <div class="name">{{ user.first_name }} {{ user.last_name }}</div>
+                                <div class="job">{{ user.job_title }}</div>
+                            </div>
+                        </div>
+                        <a href="/logout"><i class="fas fa-sign-out-alt" id="logout"></i></a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    
+    
+        <div class="home-content">
+            <div class="text">
+                <form>
+                    <select name="status" id="tickets-status">
+                        <option value="">Select Status:</option>
+                        <option value="Open">Open</option>
+                        <option value="Approved">Approved</option> 
+                        <option value="Assigned">Assigned</option>
+                        <option value="WIP">WIP</option>
+                        <option value="Trouble Shooting">Trouble Shooting</option>
+                        <option value="Review">Review</option>
+                        <option value="Closed">Closed</option>
+                        <option value="On Hold">On Hold</option>
+                        <option value="Stuck">Stuck</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <br>
+                    <input type="submit" value="Check" id="submitBtn">
+                </form>
+                
+                <div id="table-content"></div>
+        </div>
+    </body>
+</body>
+</html>

@@ -63,9 +63,25 @@ class Ticket:
         query = "UPDATE tickets SET title = %(title)s, description = %(description)s, urgency = %(urgency)s, est_due_date = %(est_due_date)s, status= %(status)s, assigned_to= %(assigned_to)s, updated_at= NOW() WHERE tickets.id=%(id)s;"
         return connectToMySQL("bug_tracker").query_db(query, data)
 
-######################################
-# search ticket
-######################################
+    ######################################
+    # show data by ticket status
+    ######################################
+    @classmethod
+    def search_by_status(cls, data):
+        query = "SELECT tickets.id, title, description, urgency, est_due_date, status, first_name FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id WHERE status = %(search)s;"
+        return connectToMySQL("bug_tracker").query_db(query, data)
+
+    ######################################
+    # count data by ticket status
+    ######################################
+    @classmethod
+    def count_by_status(cls, data):
+        query = "SELECT COUNT(tickets.id) AS count FROM tickets LEFT JOIN admins ON tickets.admin_id = admins.id LEFT JOIN users ON admins.user_id = users.id WHERE status = %(search)s;"
+        return connectToMySQL("bug_tracker").query_db(query, data)
+
+    ######################################
+    # search ticket
+    ######################################
     @classmethod
     def search_ticket(cls, data):
         query = "SELECT * FROM tickets WHERE id LIKE %(search_word)s OR title LIKE %(search_word)s;"

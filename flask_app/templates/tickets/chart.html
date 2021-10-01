@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Analytics</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/table.css') }}">
     <link rel="short cut icon" type="image/png" href="../static/images/favicon.png">
@@ -58,11 +58,11 @@
                 <span class="tooltip">Analytics</span>
             </li>
             <li>
-                <a href="/tickets/status">
+                <a href="#">
                     <i class="fas fa-folder"></i>
-                    <span class="links-name">Tickets Status</span>
+                    <span class="links-name">Category</span>
                 </a>
-                <span class="tooltip">Tickets Status</span>
+                <span class="tooltip">Category</span>
             </li>
             <li>
                 <a href="/admins/setting">
@@ -102,61 +102,7 @@
 
     <div class="home-content">
         <div class="text">
-            <div id="result"></div>
-            <div class="error-msg">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        {% for message in messages %}
-                            <p class="text-danger">{{message}}</p>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-            </div>
-            <h3>All Open Tickets: </h3>
-            <br>
-            <hr>
-            <table>
-                <thead>
-                    <tr>
-                        <th class="sort" value="id">Ticket No.</th>
-                        <th class="sort" value="title">Title</th>
-                        <th class="sort" value="urgency">Urgency</th>
-                        <th class="sort" value="admin_id">Requestor</th>
-                        <th class="sort" value="est_due_date">Est. Due Date</th>
-                        <th class="sort" value="status">Status</th>
-                        <th class="sort" value="timeline">Timeline</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="table-content">
-                    {% for ticket in all_tickets%}
-                    <tr>
-                        <td>{{ticket.id}}</td>
-                        <td class = "ticket-title">{{ticket.title}}</td>
-                        <td>{{ticket.urgency}}</td>
-                        <td>{{ticket.first_name}}</td>
-                        <td>{{ticket.est_due_date}}</td>
-                        <td>{{ticket.status}}</td>
-                        <!-- apply color styling for due date approching -->
-                        {% if ticket.time_line < 0: %}
-                        <td class="error-msg">{{ticket.time_line}}</td>
-                        {% elif ticket.time_line < 3 %}
-                        <td class="danger-msg">{{ticket.time_line}}</td>
-                        {% else: %}
-                        <td>{{ticket.time_line}}</td>
-                        {% endif %}
-
-                        <td>
-                            <button class="btn-gray"><a href="/view/ticket/{{ticket.id}}">View</a></button> || 
-                            {% if session["admin_level"] %}
-                            <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button> ||
-                            {% endif %}
-                            <button class="btn-yellow"><a href="/edit/ticket/{{ticket.id}}">Comment</a></button>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <h1 class="error-msg">Chart coming up soon...</h1>
     </div>
 </body>
 </html>

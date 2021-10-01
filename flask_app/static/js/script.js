@@ -64,4 +64,19 @@ $(document).ready(function(){
             }
         });
     }
+
+    $("#submitBtn").click(function(event) {
+        event.preventDefault();
+        var search = $("#tickets-status").val();
+        // console.log(search)
+        $.ajax({
+            url: "/searchstatus",
+            method: "POST",
+            // pass input as prepared dict., so we can use it at backend
+            data: {query: search},
+            success: function(data) {
+                $("#table-content").html(data);
+            }
+        });
+    })
 });
