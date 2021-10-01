@@ -1,1 +1,1 @@
-![ERD](/flask_app/static/images/avatar.png)
+![ERD](/flask_app/static/images/ERD.png)
