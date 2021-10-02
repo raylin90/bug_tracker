@@ -33,6 +33,9 @@ def create_ticket():
     # print(one_admin["level_identifier"])
     session["admin_level"] = one_admin[0]["level_identifier"]
     session["admin_id"] = one_admin[0]["id"]
+    if session["admin_level"] < 1:
+        flash("Create Ticket Page Only Open to Authorized User")
+        return redirect("/dashboard")
     # print(session["admin_id"])
     return render_template ("/tickets/create.html", user = user)
 
@@ -50,6 +53,7 @@ def save_ticket():
         "urgency": request.form["urgency"],
         "est_due_date": request.form["est_due_date"],
         "status": request.form["status"],
+        "assigned_to": 3,
     }
     Ticket.save_ticket(data)
     return redirect ("/dashboard")
@@ -73,7 +77,7 @@ def view_ticket(id):
     }
     # show pre-filled information for user's easy refeerence
     ticket = Ticket.show_one_ticket(data)
-    print(ticket)
+    # print(ticket)
     return render_template("tickets/view.html", ticket = ticket, user = user)
 
 ######################################
@@ -98,14 +102,12 @@ def edit_ticket(id):
     # print(users)
     # print(ticket["assigned_to"])
     comments = Comment.get_all_comments(data)
-    print("1111111")
-    print(comments)
     data = {
         "id": int(ticket["assigned_to"])
     }
     assigned_to_user = User.get_user_by_id(data)
-    print("22222222")
-    print(assigned_to_user)
+    # print("22222222")
+    # print(assigned_to_user)
     return render_template("tickets/edit.html", ticket = ticket, users = users, assigned_to_user = assigned_to_user, comments = comments, user = user)
 
 @app.route("/update/ticket/<id>", methods=["POST"])
@@ -139,7 +141,7 @@ def update_comment(id):
     if not Comment.validate_comment(data):
         return redirect(f'/edit/ticket/{id}')
     Comment.save_comment(data)
-    return redirect("/dashboard")
+    return redirect(f"/edit/ticket/{id}")
 
 ######################################
 # search ticket route

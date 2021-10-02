@@ -69,7 +69,7 @@ class User:
     def get_user_by_id(cls, data):
         query = "SELECT * FROM users LEFT JOIN admins ON users.id = admins.user_id WHERE users.id = %(id)s"
         login_user = connectToMySQL("bug_tracker").query_db(query, data)
-        print(login_user)
+        # print(login_user)
         # return results
         return login_user[0]
     

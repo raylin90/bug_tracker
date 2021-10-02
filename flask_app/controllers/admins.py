@@ -3,6 +3,9 @@ from flask_app import app
 # import render_template(view HTML), redirect(route to different URL), request(get data from HTML), session(store session value), flask(display flash message
 from flask import render_template,redirect,request,session, flash
 from flask_app.models.admin import Admin
+# Bcrypt to hash the password
+from flask_bcrypt import Bcrypt
+bcrypt = Bcrypt(app)
 
 ######################################
 # view one admins account
@@ -66,13 +69,15 @@ def edit_one_admin(id):
 
 @app.route("/update/admin/<id>", methods = ["POST"])
 def update_one_admin(id):
-    print(request.form)
+    print(request.form['password'])
+    pw_hash = bcrypt.generate_password_hash(request.form['password'])
+    print(pw_hash)
     data = { 
         "id": int(id),
         "first_name": request.form["first_name"],
         "last_name": request.form["last_name"],
         "email": request.form["email"],
-        "password": request.form["password"],
+        "password": pw_hash,
         "level_identifier": request.form["level_identifier"],
         "branch": request.form["branch"],
         "job_title": request.form["job_title"],

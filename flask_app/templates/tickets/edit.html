@@ -8,7 +8,7 @@
     <link rel="short cut icon" type="image/png" href="../static/images/favicon.png">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form3.css') }}">
-    <script src="../static/js/script.js" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}" defer></script>
     <!-- Font Awesome CDN Link  -->
     <script src="https://kit.fontawesome.com/37127f916b.js" crossorigin="anonymous"></script>
     <!-- jQuery CDN Link -->
@@ -108,17 +108,16 @@
 
 
     <div class="home-content">
+        <div class="error-msg">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="text-danger">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
         <div class="text">
-            <div class="error-msg">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        {% for message in messages %}
-                            <p class="text-danger">{{message}}</p>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-            </div>
-
             <div class="left">
                 <h1>Edit Ticket No. {{ ticket.id}}</h1>
                 <form action="/update/ticket/{{ticket.id}}" method="post">
@@ -187,7 +186,7 @@
                             </optgroup>
                         </select>
                     </div>
-                    {% if session["admin_level"]  %}
+                    {% if session["admin_level"] > 2 or session["user_id"] == ticket.user_id %}
                     <input type="submit" value="Update">
                     {% endif %}
                 </form>
@@ -211,8 +210,7 @@
     
                 <form action="/update/comment/{{ticket.id}}" method="post">
                     <div class="form-item">
-                        <label for="comment">Leave your comment:</label>
-                        <textarea name="text" cols="30" rows="6"></textarea>
+                        <textarea name="text" cols="30" rows="6" placeholder="Leave your comment:"></textarea>
                     </div>
                     <input type="submit" value="Post">
                 </form>

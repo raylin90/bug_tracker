@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/form2.css') }}">
     <link rel="short cut icon" type="image/png" href="../static/images/favicon.png">
-    <script src="../static/js/script.js" defer></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}" defer></script>
     <!-- Font Awesome CDN Link  -->
     <script src="https://kit.fontawesome.com/37127f916b.js" crossorigin="anonymous"></script>
     <!-- jQuery CDN Link -->
@@ -167,7 +167,11 @@
                     <input type="text" name="first_name" value={{ticket.first_name}} disabled>
                 </div>
             </form>
+            {% if session["admin_level"] > 2 or session["user_id"] == ticket.user_id %}
             <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button>
+            {% else %}
+            <button class="btn-yellow"><a href="/edit/ticket/{{ticket.id}}">Comment</a></button>
+            {% endif %}
         </div>
     </div>
 </body>

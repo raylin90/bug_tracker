@@ -155,10 +155,11 @@
 
                         <td>
                             <button class="btn-gray"><a href="/view/ticket/{{ticket.id}}">View</a></button> || 
-                            {% if session["admin_level"] %}
-                            <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button> ||
-                            {% endif %}
+                            {% if session["admin_level"] > 2 or session["user_id"] == ticket.admins_id %}
+                            <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button>
+                            {% else %}
                             <button class="btn-yellow"><a href="/edit/ticket/{{ticket.id}}">Comment</a></button>
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}

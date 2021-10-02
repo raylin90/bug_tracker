@@ -3,13 +3,12 @@
 <table>
     <thead>
         <tr>
-            <th class="sort" value="id">Ticket No.</th>
-            <th class="sort" value="title">Title</th>
-            <th class="sort" value="urgency">Urgency</th>
-            <th class="sort" value="admin_id">Requestor</th>
-            <th class="sort" value="est_due_date">Est. Due Date</th>
-            <th class="sort" value="status">Status</th>
-            <th class="sort" value="timeline">Timeline</th>
+            <th>Ticket No.</th>
+            <th>Title</th>
+            <th>Urgency</th>
+            <th>Requestor</th>
+            <th>Est. Due Date</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -25,10 +24,11 @@
 
             <td>
                 <button class="btn-gray"><a href="/view/ticket/{{ticket.id}}">View</a></button> || 
-                {% if session["admin_level"] %}
-                <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button> ||
-                {% endif %}
+                {% if session["admin_level"] > 2 or session["user_id"] == ticket.admins_id %}
+                <button class="btn-tile"><a href="/edit/ticket/{{ticket.id}}">Edit</a></button>
+                {% else %}
                 <button class="btn-yellow"><a href="/edit/ticket/{{ticket.id}}">Comment</a></button>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}

@@ -134,7 +134,7 @@ def update_user(id):
     }
     user_in_db = User.get_user_by_id(data)
     # check if old password matching to db or not
-    if not bcrypt.check_password_hash(user_in_db.password, request.form['old_password']):
+    if not bcrypt.check_password_hash(user_in_db["password"], request.form["old_password"]):
         # if we get False after checking the password
         flash("Old Password is not correct, please try again!!!")
         return redirect(f'/edit/user/{id}')
