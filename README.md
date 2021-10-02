@@ -15,7 +15,7 @@
 ![ERD](/flask_app/static/images/ERD.png)
 
 2. Wireframe:
-![wireframe](/flask_app/static/images/wireframe.png)
+![wireframe](/flask_app/static/images/bug_tracker_wireframe.png)
 
 3. Technique Used:
 * used Jinja2 template engine for front-end view page
