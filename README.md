@@ -1,51 +1,37 @@
-# Python Flask web application that allows user to submit technical bug or change request
+# Python Flask web application that allows users to submit technical bugs or change request
 
 1. Entity Relationship Diagram:
-    * only admin user can create/edit technical ticket
-    * registered user can only leave comments
+* user is required to login to perform additional function
+* regular user cannot create ticket, only authorized user can, see below table for detail authority, as admin level increase, user gain more feature access
+|User|Admin Level|Feature|
+|----|-----------|-------|
+|un-register|None|able to view and search|
+|registered|0 - Inactivate User|comment and change it's own password|
+|registered|1 - Activate User|create ticket and edit/update own ticket|
+|registered|5 - Tech User|edit/update all the tickets|
+|registered|8/9 - Admin/Top Level|able to set up admin information|
 ![ERD](/flask_app/static/images/ERD.png)
 
 2. Wireframe:
+![wireframe](/flask_app/static/images/wireframe.png)
 
+3. Technique Used:
+* used Jinja2 template engine for front-end view page
+* used CSS for styling
+* used jQuery for extra functionality like click and hover
+* used AJAX for dynamic web page refresh by allowing only portion of the page reload
+* used MySQL as backend database
+* used Bcrypt for user security
+* used regex & validation to check user input and keep data consistent
 
-Technic Used:
-1. used Jinja2 template engine for front-end view page
-2. used CSS for styling
-3. used jQuery for extra functionality like click and hover
-4. used AJAX for dynamic web page by allowing only portion of the page reload
-5. used MySQL as database
-6. used Bcrypt; Validation and regex for user security
+4. What I learned:
+* built full CRUD Python - Flask web application
+* learned jQuery and AJAX on my own, made website more dynamic
+* SQL query language
+* database relationship setup 
+* built my first wireframe:
 
-
-Admin Level:
-
-0 - Inactivate User
-able to view, search, comment and change it's own password
-
-1 - Activate User
-create ticket and edit/update ticket crated by him/her
-
-5 - Tech User
-edit/update all the tickets
-
-8 - Admin
-9 - Top Level
-able to set up admin information
-
-
-
-What I learned:
-
-I learned CSS Grid as first time, as it's very cool tool to position out 2-D layout by changing it's columns and rows
-deeper understanding of DOM Manipulation, on how data transfer from HTML to JS and vice versa
-
-
-
-
-What's the difficulty I had:
-It was a lot more complicated than I imagined in the first place. Instead of just getting the number and performing the computation. We need to consider many edge cases like:
-The front display is string, and backend we need to treat it as float
-if the user didn't enter anything, and wants to perform the computation
-what if the user enters decimal first without pressing the 0
-what if user entered decimal multiple times
-The biggest issue I faced was trying to make the number look nicer. For example: put a comma , to separate the number in every three digits like 1,000 instead of displaying 1000. Instead of applying it directly (using built-in toLocaleString) I had some issues when facing the decimal. So I need to split the number into an integer and decimal part, then apply toLocaleString on the integer part then concatenate back for display on the front end
+5. What's the difficulty I had:
+* relationship: as project growth, relationship became more complicated, and harder to maintain, I need to depend on the wireframe to setup all the relationship and query correctly
+* SQL queries: how to maintain clean, and effective use of query became a problem. It's easy to create a new one every time, but not in a smart way. So I went back and combine some of the queries so I can re-use them (ex: LEFT JOIN queries)
+* different user authority: it's not just assign a level to each user, instead, need to make sure each route are verifying login user correctly, and at HTML page, need to make sure button are displayed (based on the admin level, different user will see different button) correct with flash message
