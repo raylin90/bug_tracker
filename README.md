@@ -3,7 +3,7 @@
 1. Entity Relationship Diagram:
     * only admin user can create/edit technical ticket
     * registered user can only leave comments
-![ERD]
+![ERD](/flask_app/static/images/ERD.png)
 
 2. Wireframe:
 
@@ -17,7 +17,20 @@ Technic Used:
 6. used Bcrypt; Validation and regex for user security
 
 
+Admin Level:
 
+0 - Inactivate User
+able to view, search, comment and change it's own password
+
+1 - Activate User
+create ticket and edit/update ticket crated by him/her
+
+5 - Tech User
+edit/update all the tickets
+
+8 - Admin
+9 - Top Level
+able to set up admin information
 
 
 

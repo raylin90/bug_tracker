@@ -101,6 +101,8 @@ def dashboard():
     one_admin = Admin.get_admins_by_user_id(data)
     # set admin level into session, because we only one certain users in the setting page
     session["admin_level"] = one_admin["level_identifier"]
+    if session["admin_level"] == None:
+        session["admin_level"] = 0
     return render_template("dashboard.html", user = user, all_tickets = all_tickets)
 
 ######################################

@@ -61,7 +61,6 @@ class User:
     def save_user(cls, data):
         query = "INSERT INTO users (first_name, last_name, email, password, created_at) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s, NOW())"
         return connectToMySQL("bug_tracker").query_db(query, data)
-
     ############################################
     # get the user whom logged in
     ############################################
