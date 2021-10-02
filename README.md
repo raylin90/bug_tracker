@@ -3,6 +3,7 @@
 1. Entity Relationship Diagram:
 * user is required to login to perform additional function
 * regular user cannot create ticket, only authorized user can, see below table for detail authority, as admin level increase, user gain more feature access
+
 | User | Admin Level | Feature |
 | --- | --- | --- |
 | un-register | None|able to view and search|
@@ -10,6 +11,7 @@
 | registered | 1 - Activate User | create ticket and edit/update own ticket|
 | registered | 5 - Tech User | edit/update all the tickets|
 | registered | 8/9 - Admin/Top Level | able to set up admin information|
+
 ![ERD](/flask_app/static/images/ERD.png)
 
 2. Wireframe:
