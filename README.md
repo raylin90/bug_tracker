@@ -32,7 +32,7 @@
 * SQL query language
 * database relationship setup 
 * built my first wireframe:
-* AWS Deployment
+* AWS Deployment using Gunicorn, Nginx
 
 5. What's the difficulty I had:
 * relationship: as project growth, relationship became more complicated, and harder to maintain, I need to depend on the wireframe to setup all the relationship and query correctly
