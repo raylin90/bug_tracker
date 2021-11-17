@@ -51,7 +51,8 @@ __Built with__
 ------------------
 ### AWS(EC2) Deployment
 http://3.135.1.254
-\L: r@l.com\
+
+L: r@l.com\
 P: sdfsdfsdf\
 you can use my admin account to test out features
 
