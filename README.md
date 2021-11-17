@@ -59,6 +59,9 @@ you can use my admin account to test out features
 ------------------
 ### Installation
 ```
+# Dump below ERD into your sql database
+bug_tracker/ERD/bug_tracker.mwb
+
 # Clone this repository
 $ git clone https://github.com/raylin90/bug_tracker.git
 
@@ -67,8 +70,6 @@ $ cd bug_tracker
 
 # Open in your editor
 $ code . (I use VS Code, so it's the shortcut terminal command)
-
-# Create ERD
 
 # Install Flask & MySQL connection
 $ pipenv install PyMySQL flask
