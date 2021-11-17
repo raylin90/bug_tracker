@@ -1,40 +1,74 @@
-# Python Flask web application that allows users to submit technical bugs or change request
+# Bug Tracker
+Python Flask web application that allow users to submit technical bugs or change requests
 
-1. Entity Relationship Diagram:
+------------------
+### Entity Relationship Diagram:
 * user is required to login to perform additional function
 * regular user cannot create ticket, only authorized user can, see below table for detail authority, as admin level increase, user gain more feature access
 
 | User | Admin Level | Feature |
 | --- | --- | --- |
-| un-register | None|able to view and search|
+| un-register | None | able to view and search|
 | registered | 0 - Inactivate User | comment and change it's own password|
-| registered | 1 - Activate User | create ticket and edit/update own ticket|
+| registered | 1 - Activate User | create ticket and edit/update it's own ticket|
 | registered | 5 - Tech User | edit/update all the tickets|
 | registered | 8/9 - Admin/Top Level | able to set up admin information|
 
+------------------
+### ERD
 ![ERD](/flask_app/static/images/ERD.png)
 
-2. Wireframe:
+------------------
+### Wireframe:
 ![wireframe](/flask_app/static/images/bug_tracker_wireframe.png)
 
-3. Technique Used:
-* used Jinja2 template engine for front-end view page
-* used CSS for styling
-* used jQuery for extra functionality like click and hover
-* used AJAX for dynamic web page refresh by allowing only portion of the page reload
-* used MySQL as backend database
-* used Bcrypt for user security
-* used regex & validation to check user input and keep data consistent
+------------------
+### Tech/framework used
+__Built with__
+- Jinja2 template engine for front-end view page
+- CSS for styling
+- jQuery for extra functionality like click and hover
+- AJAX for dynamic web page refresh by allowing only portion of the page reload
+- MySQL as backend database
+- Bcrypt for user security
+- regex & validation to check user input and keep data consistent
 
-4. What I learned:
-* built full CRUD Python - Flask web application
-* learned jQuery and AJAX on my own, made website more dynamic
-* SQL query language
-* database relationship setup 
-* built my first wireframe:
-* AWS Deployment using Gunicorn, Nginx
+------------------
+### Spotlights:
+1. built full CRUD Python - Flask web application
+2. learned jQuery and AJAX on my own, made website more dynamic
+3. SQL query language
+4. database relationship setup 
+5. built my first wireframe:
+6. AWS Deployment using Gunicorn, Nginx
 
-5. What's the difficulty I had:
-* relationship: as project growth, relationship became more complicated, and harder to maintain, I need to depend on the wireframe to setup all the relationship and query correctly
-* SQL queries: how to maintain clean, and effective use of query became a problem. It's easy to create a new one every time, but not in a smart way. So I went back and combine some of the queries so I can re-use them (ex: LEFT JOIN queries)
-* different user authority: it's not just assign a level to each user, instead, need to make sure each route are verifying login user correctly, and at HTML page, need to make sure button are displayed (based on the admin level, different user will see different button) correct with flash message
+------------------
+### Difficulties:
+1. relationship: as the project scales up, relationship becomes more complicated, and harder to maintain, I need to rely on the wireframe to set up all the relationships and query correctly
+2. SQL queries: how to maintain clean, and effective use of query became a problem. It's easy to create a new one every time, but not in a smart way. So I went back and combined some of the queries so I can re-use them (ex: LEFT JOIN queries)
+3. different user authority: it's not just assign a level to each user, instead, need to make sure each route are verifying login user correctly, and at HTML page, need to make sure button are displayed (based on the admin level, different user will see different button) correct with flash message
+
+------------------
+### Installation
+```
+# Clone this repository
+$ git clone https://github.com/raylin90/bug_tracker.git
+
+# Go into the repository
+$ cd bug_tracker
+
+# Open in your editor
+$ code . (I use VS Code, so it's the shortcut terminal command)
+
+# Create ERD
+
+# Install Flask & MySQL connection
+$ pipenv install PyMySQL flask
+
+# Run virtual environment
+$ pipenv shell
+# if your terminal command  starts with (project name), then you are in virtual environment
+
+# Run the app
+$ python3 server.py
+```
