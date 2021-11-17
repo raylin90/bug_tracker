@@ -44,7 +44,7 @@ __Built with__
 
 ------------------
 ### Difficulties:
-1. relationship: as the project scales up, relationship becomes more complicated, and harder to maintain, I need to rely on the wireframe to set up all the relationships and query correctly
+1. relationship: as the project scales up, relationships become more complicated, and harder to maintain, I need to rely on the wireframe to set up all the relationships and query correctly
 2. SQL queries: how to maintain clean, and effective use of query became a problem. It's easy to create a new one every time, but not in a smart way. So I went back and combined some of the queries so I can re-use them (ex: LEFT JOIN queries)
 3. different user authority: it's not just assign a level to each user, instead, need to make sure each route are verifying login user correctly, and at HTML page, need to make sure button are displayed (based on the admin level, different user will see different button) correct with flash message
 
