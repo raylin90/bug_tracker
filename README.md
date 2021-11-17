@@ -49,6 +49,13 @@ __Built with__
 3. different user authority: it's not just assign a level to each user, instead, need to make sure each route are verifying login user correctly, and at HTML page, need to make sure button are displayed (based on the admin level, different user will see different button) correct with flash message
 
 ------------------
+### AWS Deployment
+http://3.135.1.254
+L: r@l.com
+P: sdfsdfsdf
+# you can use my admin account to test out features
+
+------------------
 ### Installation
 ```
 # Clone this repository
