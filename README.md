@@ -13,6 +13,7 @@ Python Flask web application that allow users to submit technical bugs or change
 | registered | 1 - Activate User | create ticket and edit/update it's own ticket|
 | registered | 5 - Tech User | edit/update all the tickets|
 | registered | 8/9 - Admin/Top Level | able to set up admin information|
+
 ![ERD](/flask_app/static/images/ERD.png)
 
 ------------------
